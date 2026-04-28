@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reports & Analytics - Health Center Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <div class="sidebar">
+        <div class="sidebar-logo">
+            <h5><i class="fas fa-hospital"></i> Health Center</h5>
+            <p>Admin Panel v1.0</p>
+        </div>
+        <ul class="nav-menu">
+            <li class="nav-item"><a href="index.html" class="nav-link"><i class="bi bi-graph-up"></i> Dashboard</a></li>
+            <li class="nav-item"><a href="doctors.html" class="nav-link"><i class="bi bi-person-check"></i> Doctors</a></li>
+            <li class="nav-item"><a href="patients.html" class="nav-link"><i class="bi bi-people"></i> Patients</a></li>
+            <li class="nav-item"><a href="appointments.html" class="nav-link"><i class="bi bi-calendar-event"></i> Appointments</a></li>
+            <li class="nav-item"><a href="payments.html" class="nav-link"><i class="bi bi-credit-card"></i> Payments</a></li>
+            <li class="nav-item"><a href="reports.html" class="nav-link active"><i class="bi bi-bar-chart"></i> Reports</a></li>
+            <li class="nav-item"><a href="settings.html" class="nav-link"><i class="bi bi-gear"></i> Settings</a></li>
+        </ul>
+    </div>
+
+    <!-- Top Navigation Bar -->
+    <div class="topbar">
+        <div class="topbar-left">
+            <button class="toggle-sidebar-btn"><i class="bi bi-list"></i></button>
+            <h6 class="m-0">Reports & Analytics</h6>
+        </div>
+        <div class="topbar-right">
+            <div class="notification-bell" data-bs-toggle="dropdown">
+                <i class="bi bi-bell"></i>
+                <span class="notification-badge">3</span>
+            </div>
+            <div class="admin-profile" data-bs-toggle="dropdown">
+                <div class="admin-avatar">AD</div>
+                <span>Admin</span>
+            </div>
+            <div class="dropdown-menu dropdown-menu-end">
+                <a class="dropdown-item" href="profile.html">My Profile</a>
+                <a class="dropdown-item" href="#" onclick="logout()">Logout</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="dashboard-header d-flex justify-content-between align-items-center">
+            <div>
+                <h2>Reports & Analytics</h2>
+                <p class="welcome-message">Comprehensive analysis and reporting of health center operations.</p>
+            </div>
+            <div class="btn-group">
+                <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
+                    <i class="bi bi-download"></i> Export Report
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#" onclick="exportReport('csv')"><i class="bi bi-file-earmark-csv"></i> Export as CSV</a></li>
+                    <li><a class="dropdown-item" href="#" onclick="exportReport('pdf')"><i class="bi bi-file-earmark-pdf"></i> Export as PDF</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Report Filter -->
+        <div class="search-filter-section">
+            <select class="form-control" id="reportPeriod">
+                <option value="week">This Week</option>
+                <option value="month">This Month</option>
+                <option value="quarter">This Quarter</option>
+                <option value="year">This Year</option>
+                <option value="custom">Custom Date Range</option>
+            </select>
+            <input type="date" class="form-control" id="fromDate" style="display: none;">
+            <input type="date" class="form-control" id="toDate" style="display: none;">
+            <button class="btn btn-primary"><i class="bi bi-search"></i> Generate Report</button>
+        </div>
+
+        <!-- Key Metrics -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-label">Total Appointments</div>
+                <div class="stat-value">384</div>
+                <small class="text-success">+15% from last period</small>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Patient Satisfaction</div>
+                <div class="stat-value">4.8/5</div>
+                <small class="text-success">Based on 245 reviews</small>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Doctor Utilization</div>
+                <div class="stat-value">87%</div>
+                <small class="text-success">Average doctor availability</small>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Collection Rate</div>
+                <div class="stat-value">92%</div>
+                <small class="text-success">Payment collection rate</small>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Appointments Trend</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-container">
+                            <canvas id="appointmentsTrendChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Revenue Analysis</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-container">
+                            <canvas id="revenueAnalysisChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- More Charts -->
+        <div class="row mt-4">
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Top Specializations</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-container">
+                            <canvas id="specializationsChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Patient Demographics</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-container">
+                            <canvas id="demographicsChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Detailed Report Table -->
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5>Detailed Monthly Report</h5>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead>
+                            <tr>
+                                <th>Metric</th>
+                                <th>Week 1</th>
+                                <th>Week 2</th>
+                                <th>Week 3</th>
+                                <th>Week 4</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Appointments</strong></td>
+                                <td>89</td>
+                                <td>92</td>
+                                <td>95</td>
+                                <td>108</td>
+                                <td class="table-active"><strong>384</strong></td>
+                            </tr>
+                            <tr>
+                                <td><strong>New Patients</strong></td>
+                                <td>35</td>
+                                <td>38</td>
+                                <td>42</td>
+                                <td>48</td>
+                                <td class="table-active"><strong>163</strong></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Revenue (৳)</strong></td>
+                                <td>৳285,000</td>
+                                <td>৳312,000</td>
+                                <td>৳345,000</td>
+                                <td>৳382,000</td>
+                                <td class="table-active"><strong>৳1,324,000</strong></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Doctor Hours</strong></td>
+                                <td>320</td>
+                                <td>340</td>
+                                <td>360</td>
+                                <td>380</td>
+                                <td class="table-active"><strong>1,400</strong></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Avg Rating</strong></td>
+                                <td>4.7</td>
+                                <td>4.75</td>
+                                <td>4.8</td>
+                                <td>4.85</td>
+                                <td class="table-active"><strong>4.8</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Performance Summary -->
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5>Performance Summary</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6 class="text-muted">Key Achievements</h6>
+                        <ul class="list-unstyled">
+                            <li><i class="bi bi-check-circle text-success"></i> Increased appointment volume by 15%</li>
+                            <li><i class="bi bi-check-circle text-success"></i> Improved patient satisfaction to 4.8/5</li>
+                            <li><i class="bi bi-check-circle text-success"></i> Revenue growth of 8% month-over-month</li>
+                            <li><i class="bi bi-check-circle text-success"></i> Doctor utilization at 87%</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h6 class="text-muted">Areas for Improvement</h6>
+                        <ul class="list-unstyled">
+                            <li><i class="bi bi-exclamation-circle text-warning"></i> Reduce appointment cancellations (currently 8%)</li>
+                            <li><i class="bi bi-exclamation-circle text-warning"></i> Improve payment collection rate to 95%</li>
+                            <li><i class="bi bi-exclamation-circle text-warning"></i> Increase doctor availability in peak hours</li>
+                            <li><i class="bi bi-exclamation-circle text-warning"></i> Enhance online appointment booking experience</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="../js/script.js"></script>
+    <script>
+        // Appointments Trend Chart
+        const ctx1 = document.getElementById('appointmentsTrendChart');
+        if (ctx1) {
+            new Chart(ctx1, {
+                type: 'line',
+                data: {
+                    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                    datasets: [{
+                        label: 'Appointments',
+                        data: [12, 19, 8, 15, 14, 10, 11],
+                        borderColor: '#667eea',
+                        backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: true } },
+                    scales: {
+                        y: { beginAtZero: true, grid: { color: '#f0f0f0' } }
+                    }
+                }
+            });
+        }
+
+        // Revenue Analysis Chart
+        const ctx2 = document.getElementById('revenueAnalysisChart');
+        if (ctx2) {
+            new Chart(ctx2, {
+                type: 'bar',
+                data: {
+                    labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+                    datasets: [{
+                        label: 'Revenue (৳)',
+                        data: [285000, 312000, 345000, 382000],
+                        backgroundColor: 'rgba(102, 126, 234, 0.7)',
+                        borderColor: '#667eea',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: true } },
+                    scales: {
+                        y: { beginAtZero: true, grid: { color: '#f0f0f0' } }
+                    }
+                }
+            });
+        }
+
+        // Top Specializations Chart
+        const ctx3 = document.getElementById('specializationsChart');
+        if (ctx3) {
+            new Chart(ctx3, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Cardiology', 'Neurology', 'Dermatology', 'Orthopedics', 'General'],
+                    datasets: [{
+                        data: [25, 20, 18, 22, 15],
+                        backgroundColor: [
+                            'rgba(102, 126, 234, 0.8)',
+                            'rgba(118, 75, 162, 0.8)',
+                            'rgba(40, 167, 69, 0.8)',
+                            'rgba(220, 53, 69, 0.8)',
+                            'rgba(255, 193, 7, 0.8)'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+        }
+
+        // Patient Demographics Chart
+        const ctx4 = document.getElementById('demographicsChart');
+        if (ctx4) {
+            new Chart(ctx4, {
+                type: 'pie',
+                data: {
+                    labels: ['18-30', '30-45', '45-60', '60+'],
+                    datasets: [{
+                        data: [22, 38, 28, 12],
+                        backgroundColor: [
+                            'rgba(102, 126, 234, 0.8)',
+                            'rgba(118, 75, 162, 0.8)',
+                            'rgba(40, 167, 69, 0.8)',
+                            'rgba(220, 53, 69, 0.8)'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+        }
+
+        document.getElementById('reportPeriod').addEventListener('change', function(e) {
+            if (e.target.value === 'custom') {
+                document.getElementById('fromDate').style.display = 'block';
+                document.getElementById('toDate').style.display = 'block';
+            } else {
+                document.getElementById('fromDate').style.display = 'none';
+                document.getElementById('toDate').style.display = 'none';
+            }
+        });
+
+        function exportReport(format) {
+            showToast('Exporting report as ' + format.toUpperCase() + '...', 'info');
+            // Implement actual export functionality here
+        }
+    </script>
+</body>
+</html>

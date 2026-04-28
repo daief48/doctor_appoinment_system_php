@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <title>Health Center - Book Appointment</title>
+     <meta charset="UTF-8">
+     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+     <meta name="description" content="">
+     <meta name="keywords" content="">
+     <meta name="author" content="Tooplate">
+     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+     <link rel="stylesheet" href="css/bootstrap.min.css">
+     <link rel="stylesheet" href="css/font-awesome.min.css">
+     <link rel="stylesheet" href="css/animate.css">
+     <link rel="stylesheet" href="css/tooplate-style.css">
+
+     <style>
+         .booking-container {
+             background: white;
+             border-radius: 10px;
+             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+             padding: 30px;
+             margin-bottom: 30px;
+         }
+         .booking-header {
+             text-align: center;
+             margin-bottom: 30px;
+         }
+         .booking-header h2 {
+             color: #333;
+             margin-bottom: 10px;
+         }
+         .form-section {
+             margin-bottom: 30px;
+             padding: 20px;
+             border: 1px solid #eee;
+             border-radius: 5px;
+         }
+         .form-section h4 {
+             color: #667eea;
+             margin-bottom: 20px;
+             border-bottom: 2px solid #667eea;
+             padding-bottom: 10px;
+         }
+         .doctor-card {
+             border: 1px solid #ddd;
+             border-radius: 5px;
+             padding: 15px;
+             margin-bottom: 10px;
+             cursor: pointer;
+             transition: all 0.3s ease;
+         }
+         .doctor-card:hover, .doctor-card.selected {
+             border-color: #667eea;
+             background: #f8f9ff;
+         }
+         .doctor-info h5 {
+             margin: 0 0 5px 0;
+             color: #333;
+         }
+         .doctor-info p {
+             margin: 0;
+             color: #666;
+             font-size: 0.9em;
+         }
+         .time-slots {
+             display: grid;
+             grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+             gap: 10px;
+             margin-top: 15px;
+         }
+         .time-slot {
+             padding: 10px;
+             border: 1px solid #ddd;
+             border-radius: 5px;
+             text-align: center;
+             cursor: pointer;
+             transition: all 0.3s ease;
+         }
+         .time-slot:hover, .time-slot.selected {
+             border-color: #667eea;
+             background: #667eea;
+             color: white;
+         }
+         .time-slot.disabled {
+             background: #f5f5f5;
+             color: #999;
+             cursor: not-allowed;
+         }
+         .booking-summary {
+             background: #f8f9fa;
+             border-radius: 5px;
+             padding: 20px;
+             margin-top: 20px;
+         }
+         .summary-item {
+             display: flex;
+             justify-content: space-between;
+             margin-bottom: 10px;
+         }
+         .summary-item.total {
+             border-top: 1px solid #ddd;
+             padding-top: 10px;
+             font-weight: bold;
+             font-size: 1.1em;
+         }
+         .btn-booking {
+             width: 100%;
+             padding: 15px;
+             font-size: 16px;
+             font-weight: bold;
+             border-radius: 5px;
+         }
+         .search-section {
+             background: #f8f9fa;
+             padding: 20px;
+             border-radius: 5px;
+             margin-bottom: 20px;
+         }
+         .search-input {
+             position: relative;
+         }
+         .search-input i {
+             position: absolute;
+             right: 15px;
+             top: 12px;
+             color: #666;
+         }
+         @media (max-width: 768px) {
+             .time-slots {
+                 grid-template-columns: repeat(2, 1fr);
+             }
+         }
+     </style>
+</head>
+<body>
+
+     <!-- HEADER -->
+     <header>
+          <div class="container">
+               <div class="row">
+                    <div class="col-md-8 col-sm-7">
+                         <p>Welcome back, Rohim Uddin!</p>
+                    </div>
+                    <div class="col-md-4 col-sm-5 text-align-right">
+                         <span class="email-icon"><i class="fa fa-envelope-o"></i> <a href="#">rohim.uddin@email.com</a></span>
+                         <span class="logout-icon"><i class="fa fa-sign-out"></i> <a href="login.html">Logout</a></span>
+                    </div>
+               </div>
+          </div>
+     </header>
+
+     <!-- MENU -->
+     <section class="navbar navbar-default navbar-static-top" role="navigation">
+          <div class="container">
+
+               <div class="navbar-header">
+                    <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                         <span class="icon icon-bar"></span>
+                         <span class="icon icon-bar"></span>
+                         <span class="icon icon-bar"></span>
+                    </button>
+
+                    <!-- lOGO TEXT HERE -->
+                    <a href="index.html" class="navbar-brand"><i class="fa fa-h-square"></i>ealth Center</a>
+               </div>
+
+               <!-- MENU LINKS -->
+               <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                         <li><a href="#top" class="smoothScroll"><i class="fa fa-home"></i> Home</a></li>
+                         <li><a href="#about" class="smoothScroll"><i class="fa fa-info-circle"></i> About</a></li>
+                         <li><a href="#team" class="smoothScroll"><i class="fa fa-user-md"></i> Doctors</a></li>
+                         <li><a href="#google-map" class="smoothScroll"><i class="fa fa-map-marker"></i> Contact</a></li>
+                         <li class="appointment-btn">
+                              <a href="#appointment">
+                                   <i class="fa fa-calendar-plus-o"></i> Book Appointment
+                              </a>
+                         </li>
+                         <li class="dropdown">
+                              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                   <i class="fa fa-user-shield"></i> Portal <i class="fa fa-caret-down"></i>
+                              </a>
+                              <ul class="dropdown-menu">
+                                   <li><a href="login.html"><i class="fa fa-sign-in"></i> Login</a></li>
+                                   <li><a href="register.html"><i class="fa fa-user-plus"></i> Register</a></li>
+                                   <li class="divider"></li>
+                                   <li><a href="dashboard.html"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+                                   <li><a href="book-appointment.html"><i class="fa fa-calendar-plus-o"></i> Appointments</a></li>
+                                   <li><a href="payments.html"><i class="fa fa-credit-card"></i> Payments</a></li>
+                                   <li><a href="prescriptions.html"><i class="fa fa-file-text"></i> Prescriptions</a></li>
+                                   <li><a href="profile.html"><i class="fa fa-user"></i> Profile</a></li>
+                                   <li class="divider"></li>
+                                   <li><a href="medical-history.html"><i class="fa fa-history"></i> History</a></li>
+                                   <li><a href="notifications.html"><i class="fa fa-bell"></i> Notifications</a></li>
+                              </ul>
+                         </li>
+                    </ul>
+               </div>
+          </div>
+     </section>
+<!-- BOOKING SECTION -->
+     <section id="booking" style="padding: 50px 0;">
+          <div class="container">
+               <div class="row">
+                    <div class="col-md-8 col-sm-12">
+
+                         <div class="booking-container">
+                              <div class="booking-header">
+                                   <h2>Book an Appointment</h2>
+                                   <p>Schedule your visit with our healthcare professionals</p>
+                              </div>
+
+                              <!-- SEARCH SECTION -->
+                              <div class="search-section">
+                                   <h4><i class="fa fa-search"></i> Find a Doctor</h4>
+                                   <div class="form-group search-input">
+                                        <input type="text" class="form-control" id="doctor-search" placeholder="Search by doctor name or specialty...">
+                                        <i class="fa fa-search"></i>
+                                   </div>
+                              </div>
+
+                              <!-- STEP 1: SELECT DEPARTMENT -->
+                              <div class="form-section">
+                                   <h4><i class="fa fa-stethoscope"></i> Step 1: Select Department</h4>
+                                   <div class="form-group">
+                                        <select class="form-control" id="department" required>
+                                             <option value="">Choose a department</option>
+                                             <option value="general">General Medicine</option>
+                                             <option value="cardiology">Cardiology</option>
+                                             <option value="dental">Dental</option>
+                                             <option value="orthopedics">Orthopedics</option>
+                                             <option value="pediatrics">Pediatrics</option>
+                                             <option value="gynecology">Gynecology</option>
+                                        </select>
+                                   </div>
+                              </div>
+
+                              <!-- STEP 2: SELECT DOCTOR -->
+                              <div class="form-section" id="doctor-section" style="display: none;">
+                                   <h4><i class="fa fa-user-md"></i> Step 2: Select Doctor</h4>
+                                   <div id="doctor-list">
+                                        <!-- Doctors will be loaded here -->
+                                   </div>
+                              </div>
+
+                              <!-- STEP 3: SELECT DATE & TIME -->
+                              <div class="form-section" id="datetime-section" style="display: none;">
+                                   <h4><i class="fa fa-calendar"></i> Step 3: Select Date & Time</h4>
+                                   <div class="row">
+                                        <div class="col-md-6">
+                                             <div class="form-group">
+                                                  <label for="appointment-date">Date</label>
+                                                  <input type="date" class="form-control" id="appointment-date" required>
+                                             </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                             <div class="form-group">
+                                                  <label for="appointment-time">Time</label>
+                                                  <select class="form-control" id="appointment-time" required>
+                                                       <option value="">Select time</option>
+                                                  </select>
+                                             </div>
+                                        </div>
+                                   </div>
+                                   <div class="time-slots" id="time-slots" style="display: none;">
+                                        <!-- Time slots will be loaded here -->
+                                   </div>
+                              </div>
+
+                              <!-- STEP 4: APPOINTMENT DETAILS -->
+                              <div class="form-section" id="details-section" style="display: none;">
+                                   <h4><i class="fa fa-info-circle"></i> Step 4: Appointment Details</h4>
+                                   <div class="form-group">
+                                        <label for="appointment-type">Appointment Type</label>
+                                        <select class="form-control" id="appointment-type">
+                                             <option value="consultation">Consultation</option>
+                                             <option value="follow-up">Follow-up</option>
+                                             <option value="emergency">Emergency</option>
+                                        </select>
+                                   </div>
+                                   <div class="form-group">
+                                        <label for="symptoms">Symptoms/Reason for visit</label>
+                                        <textarea class="form-control" id="symptoms" rows="3" placeholder="Describe your symptoms or reason for the appointment..."></textarea>
+                                   </div>
+                              </div>
+
+                              <!-- BOOKING SUMMARY -->
+                              <div class="booking-summary" id="booking-summary" style="display: none;">
+                                   <h4>Booking Summary</h4>
+                                   <div class="summary-item">
+                                        <span>Doctor:</span>
+                                        <span id="summary-doctor">-</span>
+                                   </div>
+                                   <div class="summary-item">
+                                        <span>Date & Time:</span>
+                                        <span id="summary-datetime">-</span>
+                                   </div>
+                                   <div class="summary-item">
+                                        <span>Department:</span>
+                                        <span id="summary-department">-</span>
+                                   </div>
+                                   <div class="summary-item">
+                                        <span>Type:</span>
+                                        <span id="summary-type">-</span>
+                                   </div>
+                                   <div class="summary-item total">
+                                        <span>Consultation Fee:</span>
+                                        <span>৳ 500</span>
+                                   </div>
+                              </div>
+
+                              <!-- BOOKING BUTTON -->
+                              <div id="booking-button" style="display: none;">
+                                   <button type="button" class="btn btn-primary btn-booking" id="confirm-booking">
+                                        <i class="fa fa-calendar-check-o"></i> Confirm Booking
+                                   </button>
+                              </div>
+                         </div>
+
+                    </div>
+
+                    <!-- SIDEBAR -->
+                    <div class="col-md-4 col-sm-12">
+                         <div class="sidebar" style="background: white; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); padding: 25px;">
+                              <h4>Booking Tips</h4>
+                              <ul style="list-style: none; padding: 0;">
+                                   <li style="margin-bottom: 10px;"><i class="fa fa-check text-success"></i> Book appointments in advance</li>
+                                   <li style="margin-bottom: 10px;"><i class="fa fa-check text-success"></i> Bring your ID and insurance card</li>
+                                   <li style="margin-bottom: 10px;"><i class="fa fa-check text-success"></i> Arrive 15 minutes early</li>
+                                   <li style="margin-bottom: 10px;"><i class="fa fa-check text-success"></i> Prepare your medical history</li>
+                              </ul>
+
+                              <h4 style="margin-top: 30px;">Need Help?</h4>
+                              <p>Call our helpline: <strong>010-060-0160</strong></p>
+                              <p>Email: <a href="mailto:info@company.com">info@company.com</a></p>
+                         </div>
+                    </div>
+               </div>
+          </div>
+     </section>
+
+     <!-- SUCCESS MODAL -->
+     <div class="modal fade" id="successModal" tabindex="-1" role="dialog">
+          <div class="modal-dialog" role="document">
+               <div class="modal-content">
+                    <div class="modal-header">
+                         <h4 class="modal-title"><i class="fa fa-check-circle text-success"></i> Booking Successful!</h4>
+                    </div>
+                    <div class="modal-body">
+                         <p>Your appointment has been successfully booked. You will receive a confirmation email shortly.</p>
+                         <div id="booking-details"></div>
+                    </div>
+                    <div class="modal-footer">
+                         <button type="button" class="btn btn-primary" onclick="window.location.href='my-appointments.html'">View My Appointments</button>
+                         <button type="button" class="btn btn-default" onclick="window.location.href='dashboard.html'">Back to Dashboard</button>
+                    </div>
+               </div>
+          </div>
+     </div>
+
+     <!-- SCRIPTS -->
+     <script src="js/jquery.js"></script>
+     <script src="js/bootstrap.min.js"></script>
+     <script>
+         $(document).ready(function() {
+             let selectedDoctor = null;
+             let selectedDate = null;
+             let selectedTime = null;
+
+             // Department selection
+             $('#department').change(function() {
+                 const department = $(this).val();
+                 if (department) {
+                     loadDoctors(department);
+                     $('#doctor-section').show();
+                 } else {
+                     $('#doctor-section').hide();
+                     $('#datetime-section').hide();
+                     $('#details-section').hide();
+                     $('#booking-summary').hide();
+                     $('#booking-button').hide();
+                 }
+             });
+
+             // Doctor search
+             $('#doctor-search').on('input', function() {
+                 const searchTerm = $(this).val().toLowerCase();
+                 $('.doctor-card').each(function() {
+                     const doctorName = $(this).find('h5').text().toLowerCase();
+                     const specialty = $(this).find('p').text().toLowerCase();
+                     if (doctorName.includes(searchTerm) || specialty.includes(searchTerm)) {
+                         $(this).show();
+                     } else {
+                         $(this).hide();
+                     }
+                 });
+             });
+
+             // Date selection
+             $('#appointment-date').change(function() {
+                 selectedDate = $(this).val();
+                 if (selectedDate && selectedDoctor) {
+                     loadTimeSlots(selectedDate);
+                     $('#time-slots').show();
+                 }
+             });
+
+             // Confirm booking
+             $('#confirm-booking').click(function() {
+                 if (selectedDoctor && selectedDate && selectedTime) {
+                     // Show success modal
+                     const bookingDetails = `
+                         <strong>Doctor:</strong> ${selectedDoctor.name}<br>
+                         <strong>Date:</strong> ${new Date(selectedDate).toLocaleDateString()}<br>
+                         <strong>Time:</strong> ${selectedTime}<br>
+                         <strong>Department:</strong> ${$('#department option:selected').text()}
+                     `;
+                     $('#booking-details').html(bookingDetails);
+                     $('#successModal').modal('show');
+                 }
+             });
+
+             function loadDoctors(department) {
+                 const doctors = {
+                     general: [
+                         { id: 1, name: 'Dr. Ashraful Islam', specialty: 'General Medicine', experience: '10 years' },
+                         { id: 2, name: 'Dr. Tanvir Rahman', specialty: 'General Medicine', experience: '8 years' }
+                     ],
+                     cardiology: [
+                         { id: 3, name: 'Dr. Sadiya Akter', specialty: 'Cardiology', experience: '12 years' },
+                         { id: 4, name: 'Dr. Hassan Hossain', specialty: 'Cardiology', experience: '15 years' }
+                     ],
+                     dental: [
+                         { id: 5, name: 'Dr. Farhana Ahmed', specialty: 'Dentistry', experience: '7 years' }
+                     ],
+                     orthopedics: [
+                         { id: 6, name: 'Dr. Arif Rahman', specialty: 'Orthopedics', experience: '11 years' }
+                     ],
+                     pediatrics: [
+                         { id: 7, name: 'Dr. Aisha Khan', specialty: 'Pediatrics', experience: '9 years' }
+                     ],
+                     gynecology: [
+                         { id: 8, name: 'Dr. Saira Nasrin', specialty: 'Gynecology', experience: '13 years' }
+                     ]
+                 };
+
+                 const doctorList = doctors[department] || [];
+                 let html = '';
+
+                 doctorList.forEach(doctor => {
+                     html += `
+                         <div class="doctor-card" data-doctor-id="${doctor.id}">
+                             <div class="doctor-info">
+                                 <h5>${doctor.name}</h5>
+                                 <p><i class="fa fa-stethoscope"></i> ${doctor.specialty}</p>
+                                 <p><i class="fa fa-calendar"></i> ${doctor.experience} experience</p>
+                             </div>
+                         </div>
+                     `;
+                 });
+
+                 $('#doctor-list').html(html);
+
+                 // Doctor selection
+                 $('.doctor-card').click(function() {
+                     $('.doctor-card').removeClass('selected');
+                     $(this).addClass('selected');
+                     const doctorId = $(this).data('doctor-id');
+                     selectedDoctor = doctorList.find(d => d.id == doctorId);
+
+                     $('#datetime-section').show();
+                     updateSummary();
+                 });
+             }
+
+             function loadTimeSlots(date) {
+                 const timeSlots = ['09:00', '09:30', '10:00', '10:30', '11:00', '11:30', '14:00', '14:30', '15:00', '15:30', '16:00', '16:30'];
+                 let html = '';
+
+                 timeSlots.forEach(time => {
+                     const isDisabled = Math.random() > 0.7; // Randomly disable some slots
+                     html += `
+                         <div class="time-slot ${isDisabled ? 'disabled' : ''}" data-time="${time}" ${isDisabled ? 'style="pointer-events: none;"' : ''}>
+                             ${time}
+                         </div>
+                     `;
+                 });
+
+                 $('#time-slots').html(html);
+
+                 // Time slot selection
+                 $('.time-slot:not(.disabled)').click(function() {
+                     $('.time-slot').removeClass('selected');
+                     $(this).addClass('selected');
+                     selectedTime = $(this).data('time');
+
+                     $('#details-section').show();
+                     $('#booking-summary').show();
+                     $('#booking-button').show();
+                     updateSummary();
+                 });
+             }
+
+             function updateSummary() {
+                 if (selectedDoctor) {
+                     $('#summary-doctor').text(selectedDoctor.name);
+                     $('#summary-department').text($('#department option:selected').text());
+                     $('#summary-type').text($('#appointment-type option:selected').text());
+                 }
+                 if (selectedDate && selectedTime) {
+                     const dateTime = new Date(selectedDate).toLocaleDateString() + ' at ' + selectedTime;
+                     $('#summary-datetime').text(dateTime);
+                 }
+             }
+
+             // Set minimum date to today
+             const today = new Date().toISOString().split('T')[0];
+             $('#appointment-date').attr('min', today);
+         });
+     </script>
+
+</body>
+</html>

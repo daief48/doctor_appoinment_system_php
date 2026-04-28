@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <title>Health Center - Medical History</title>
+     <meta charset="UTF-8">
+     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+     <meta name="description" content="">
+     <meta name="keywords" content="">
+     <meta name="author" content="Tooplate">
+     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+     <link rel="stylesheet" href="css/bootstrap.min.css">
+     <link rel="stylesheet" href="css/font-awesome.min.css">
+     <link rel="stylesheet" href="css/animate.css">
+     <link rel="stylesheet" href="css/tooplate-style.css">
+
+     <style>
+         .history-container {
+             background: white;
+             border-radius: 10px;
+             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+             padding: 30px;
+             margin-bottom: 30px;
+         }
+         .history-header {
+             display: flex;
+             justify-content: space-between;
+             align-items: center;
+             margin-bottom: 30px;
+         }
+         .history-header h2 {
+             margin: 0;
+             color: #333;
+         }
+         .timeline {
+             position: relative;
+             padding-left: 30px;
+         }
+         .timeline::before {
+             content: '';
+             position: absolute;
+             left: 15px;
+             top: 0;
+             bottom: 0;
+             width: 2px;
+             background: #667eea;
+         }
+         .timeline-item {
+             position: relative;
+             margin-bottom: 30px;
+             padding-left: 40px;
+         }
+         .timeline-item::before {
+             content: '';
+             position: absolute;
+             left: -22px;
+             top: 10px;
+             width: 12px;
+             height: 12px;
+             border-radius: 50%;
+             background: #667eea;
+             border: 3px solid white;
+             box-shadow: 0 0 0 2px #667eea;
+         }
+         .timeline-date {
+             background: #667eea;
+             color: white;
+             padding: 5px 12px;
+             border-radius: 20px;
+             font-size: 0.9em;
+             font-weight: bold;
+             display: inline-block;
+             margin-bottom: 10px;
+         }
+         .timeline-content {
+             background: #f8f9fa;
+             border-radius: 8px;
+             padding: 20px;
+             border-left: 4px solid #667eea;
+         }
+         .timeline-title {
+             font-size: 1.2em;
+             font-weight: bold;
+             color: #333;
+             margin-bottom: 10px;
+         }
+         .timeline-doctor {
+             color: #667eea;
+             font-weight: 500;
+             margin-bottom: 10px;
+         }
+         .timeline-details {
+             display: grid;
+             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+             gap: 15px;
+             margin-top: 15px;
+         }
+         .detail-item {
+             display: flex;
+             align-items: center;
+         }
+         .detail-item i {
+             margin-right: 8px;
+             color: #667eea;
+             width: 16px;
+         }
+         .filter-section {
+             background: #f8f9fa;
+             padding: 20px;
+             border-radius: 5px;
+             margin-bottom: 20px;
+         }
+         .stats-cards {
+             display: grid;
+             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+             gap: 20px;
+             margin-bottom: 30px;
+         }
+         .stat-card {
+             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+             color: white;
+             padding: 20px;
+             border-radius: 10px;
+             text-align: center;
+         }
+         .stat-icon {
+             font-size: 2.5em;
+             margin-bottom: 10px;
+             opacity: 0.9;
+         }
+         .stat-number {
+             font-size: 1.8em;
+             font-weight: bold;
+             margin: 5px 0;
+         }
+         .stat-label {
+             font-size: 1em;
+             opacity: 0.9;
+         }
+         .export-section {
+             background: #e8f5e8;
+             padding: 20px;
+             border-radius: 5px;
+             margin-bottom: 20px;
+             border-left: 4px solid #28a745;
+         }
+         .empty-state {
+             text-align: center;
+             padding: 50px 20px;
+             color: #666;
+         }
+         .empty-state i {
+             font-size: 4em;
+             margin-bottom: 20px;
+             opacity: 0.5;
+         }
+         @media (max-width: 768px) {
+             .history-header {
+                 flex-direction: column;
+                 align-items: flex-start;
+                 gap: 15px;
+             }
+             .timeline {
+                 padding-left: 20px;
+             }
+             .timeline-item {
+                 padding-left: 30px;
+             }
+             .timeline-details {
+                 grid-template-columns: 1fr;
+             }
+         }
+     </style>
+</head>
+<body>
+
+     <!-- HEADER -->
+     <header>
+          <div class="container">
+               <div class="row">
+                    <div class="col-md-8 col-sm-7">
+                         <p>Welcome back, Rohim Uddin!</p>
+                    </div>
+                    <div class="col-md-4 col-sm-5 text-align-right">
+                         <span class="email-icon"><i class="fa fa-envelope-o"></i> <a href="#">rohim.uddin@email.com</a></span>
+                         <span class="logout-icon"><i class="fa fa-sign-out"></i> <a href="login.html">Logout</a></span>
+                    </div>
+               </div>
+          </div>
+     </header>
+
+     <!-- MENU -->
+     <section class="navbar navbar-default navbar-static-top" role="navigation">
+          <div class="container">
+
+               <div class="navbar-header">
+                    <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                         <span class="icon icon-bar"></span>
+                         <span class="icon icon-bar"></span>
+                         <span class="icon icon-bar"></span>
+                    </button>
+
+                    <!-- lOGO TEXT HERE -->
+                    <a href="index.html" class="navbar-brand"><i class="fa fa-h-square"></i>ealth Center</a>
+               </div>
+
+               <!-- MENU LINKS -->
+               <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                         <li><a href="#top" class="smoothScroll"><i class="fa fa-home"></i> Home</a></li>
+                         <li><a href="#about" class="smoothScroll"><i class="fa fa-info-circle"></i> About</a></li>
+                         <li><a href="#team" class="smoothScroll"><i class="fa fa-user-md"></i> Doctors</a></li>
+                         <li><a href="#google-map" class="smoothScroll"><i class="fa fa-map-marker"></i> Contact</a></li>
+                         <li class="appointment-btn">
+                              <a href="#appointment">
+                                   <i class="fa fa-calendar-plus-o"></i> Book Appointment
+                              </a>
+                         </li>
+                         <li class="dropdown">
+                              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                   <i class="fa fa-user-shield"></i> Portal <i class="fa fa-caret-down"></i>
+                              </a>
+                              <ul class="dropdown-menu">
+                                   <li><a href="login.html"><i class="fa fa-sign-in"></i> Login</a></li>
+                                   <li><a href="register.html"><i class="fa fa-user-plus"></i> Register</a></li>
+                                   <li class="divider"></li>
+                                   <li><a href="dashboard.html"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+                                   <li><a href="book-appointment.html"><i class="fa fa-calendar-plus-o"></i> Appointments</a></li>
+                                   <li><a href="payments.html"><i class="fa fa-credit-card"></i> Payments</a></li>
+                                   <li><a href="prescriptions.html"><i class="fa fa-file-text"></i> Prescriptions</a></li>
+                                   <li><a href="profile.html"><i class="fa fa-user"></i> Profile</a></li>
+                                   <li class="divider"></li>
+                                   <li><a href="medical-history.html"><i class="fa fa-history"></i> History</a></li>
+                                   <li><a href="notifications.html"><i class="fa fa-bell"></i> Notifications</a></li>
+                              </ul>
+                         </li>
+                    </ul>
+               </div>
+          </div>
+     </section>
+<!-- MEDICAL HISTORY SECTION -->
+     <section id="medical-history" style="padding: 50px 0;">
+          <div class="container">
+               <div class="row">
+                    <div class="col-md-12">
+
+                         <div class="history-container">
+                              <div class="history-header">
+                                   <h2><i class="fa fa-history"></i> Medical History</h2>
+                                   <div>
+                                        <span class="text-muted">Total Records: </span>
+                                        <strong>24</strong>
+                                   </div>
+                              </div>
+
+                              <!-- STATS CARDS -->
+                              <div class="stats-cards">
+                                   <div class="stat-card">
+                                        <div class="stat-icon">
+                                             <i class="fa fa-calendar-check-o"></i>
+                                        </div>
+                                        <div class="stat-number">24</div>
+                                        <div class="stat-label">Total Visits</div>
+                                   </div>
+                                   <div class="stat-card">
+                                        <div class="stat-icon">
+                                             <i class="fa fa-user-md"></i>
+                                        </div>
+                                        <div class="stat-number">6</div>
+                                        <div class="stat-label">Doctors Consulted</div>
+                                   </div>
+                                   <div class="stat-card">
+                                        <div class="stat-icon">
+                                             <i class="fa fa-file-text"></i>
+                                        </div>
+                                        <div class="stat-number">18</div>
+                                        <div class="stat-label">Prescriptions</div>
+                                   </div>
+                                   <div class="stat-card">
+                                        <div class="stat-icon">
+                                             <i class="fa fa-trophy"></i>
+                                        </div>
+                                        <div class="stat-number">2</div>
+                                        <div class="stat-label">Years with Us</div>
+                                   </div>
+                              </div>
+
+                              <!-- EXPORT SECTION -->
+                              <div class="export-section">
+                                   <h4><i class="fa fa-download"></i> Export Medical Records</h4>
+                                   <p>Download your complete medical history for your records or to share with other healthcare providers.</p>
+                                   <button class="btn btn-success" onclick="exportHistory('pdf')">
+                                        <i class="fa fa-file-pdf-o"></i> Export as PDF
+                                   </button>
+                                   <button class="btn btn-info" onclick="exportHistory('csv')" style="margin-left: 10px;">
+                                        <i class="fa fa-file-excel-o"></i> Export as CSV
+                                   </button>
+                              </div>
+
+                              <!-- FILTERS -->
+                              <div class="filter-section">
+                                   <div class="row">
+                                        <div class="col-md-3 col-sm-6">
+                                             <div class="form-group">
+                                                  <label>Filter by Type:</label>
+                                                  <select class="form-control" id="type-filter">
+                                                       <option value="all">All Records</option>
+                                                       <option value="consultation">Consultations</option>
+                                                       <option value="prescription">Prescriptions</option>
+                                                       <option value="test">Lab Tests</option>
+                                                       <option value="procedure">Procedures</option>
+                                                  </select>
+                                             </div>
+                                        </div>
+                                        <div class="col-md-3 col-sm-6">
+                                             <div class="form-group">
+                                                  <label>Filter by Doctor:</label>
+                                                  <select class="form-control" id="doctor-filter">
+                                                       <option value="all">All Doctors</option>
+                                                       <option value="Dr. Ashraful Islam">Dr. Ashraful Islam</option>
+                                                       <option value="Dr. Sadiya Akter">Dr. Sadiya Akter</option>
+                                                       <option value="Dr. Tanvir Rahman">Dr. Tanvir Rahman</option>
+                                                       <option value="Dr. Farhana Ahmed">Dr. Farhana Ahmed</option>
+                                                       <option value="Dr. Farhana Ahmed">Dr. Arif Rahman</option>
+                                                       <option value="Dr. Kamrul Hasan">Dr. Aisha Khan</option>
+                                                  </select>
+                                             </div>
+                                        </div>
+                                        <div class="col-md-3 col-sm-6">
+                                             <div class="form-group">
+                                                  <label>Sort by:</label>
+                                                  <select class="form-control" id="sort-by">
+                                                       <option value="date-desc">Date (Newest First)</option>
+                                                       <option value="date-asc">Date (Oldest First)</option>
+                                                       <option value="doctor">Doctor Name</option>
+                                                       <option value="type">Record Type</option>
+                                                  </select>
+                                             </div>
+                                        </div>
+                                        <div class="col-md-3 col-sm-6">
+                                             <div class="form-group">
+                                                  <label>Date Range:</label>
+                                                  <input type="date" class="form-control" id="date-filter">
+                                             </div>
+                                        </div>
+                                   </div>
+                              </div>
+
+                              <!-- TIMELINE -->
+                              <div class="timeline" id="medical-timeline">
+                                   <!-- Timeline items will be loaded here -->
+                              </div>
+                         </div>
+
+                    </div>
+               </div>
+          </div>
+     </section>
+
+     <!-- RECORD DETAILS MODAL -->
+     <div class="modal fade" id="recordModal" tabindex="-1" role="dialog">
+          <div class="modal-dialog modal-lg" role="document">
+               <div class="modal-content">
+                    <div class="modal-header">
+                         <h4 class="modal-title"><i class="fa fa-file-text"></i> Medical Record Details</h4>
+                    </div>
+                    <div class="modal-body">
+                         <div id="record-details"></div>
+                    </div>
+                    <div class="modal-footer">
+                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                         <button type="button" class="btn btn-primary" id="download-record">
+                             <i class="fa fa-download"></i> Download Record
+                         </button>
+                    </div>
+               </div>
+          </div>
+     </div>
+
+     <!-- SCRIPTS -->
+     <script src="js/jquery.js"></script>
+     <script src="js/bootstrap.min.js"></script>
+     <script>
+         $(document).ready(function() {
+             let medicalRecords = [];
+
+             // Load medical records
+             loadMedicalRecords();
+
+             // Filter functionality
+             $('#type-filter, #doctor-filter, #sort-by, #date-filter').on('change input', function() {
+                 filterRecords();
+                 renderTimeline();
+             });
+
+             function loadMedicalRecords() {
+                 // Mock data - in real app, this would come from API
+                 medicalRecords = [
+                     {
+                         id: 1,
+                         date: '2024-04-10',
+                         type: 'consultation',
+                         title: 'Cardiology Consultation',
+                         doctor: 'Dr. Sadiya Akter',
+                         specialty: 'Cardiology',
+                         diagnosis: 'Hypertension - Follow-up',
+                         notes: 'Blood pressure improved. Continue current medication regimen.',
+                         vitals: { bp: '130/85', heartRate: '72', weight: '180 lbs' },
+                         prescriptions: ['Lisinopril 10mg daily', 'Amlodipine 5mg daily']
+                     },
+                     {
+                         id: 2,
+                         date: '2024-04-05',
+                         type: 'consultation',
+                         title: 'General Medicine Consultation',
+                         doctor: 'Dr. Ashraful Islam',
+                         specialty: 'General Medicine',
+                         diagnosis: 'Upper Respiratory Infection',
+                         notes: 'Patient presenting with fever, cough, and congestion. Prescribed antibiotics.',
+                         vitals: { bp: '120/80', heartRate: '78', weight: '178 lbs', temp: '101.2°F' },
+                         prescriptions: ['Amoxicillin 500mg three times daily for 7 days', 'Ibuprofen 400mg every 6 hours as needed']
+                     },
+                     {
+                         id: 3,
+                         date: '2024-03-28',
+                         type: 'procedure',
+                         title: 'Dental Cleaning',
+                         doctor: 'Dr. Mehedi Hasan',
+                         specialty: 'Dentistry',
+                         diagnosis: 'Routine Dental Maintenance',
+                         notes: 'Professional cleaning completed. Good oral hygiene maintained.',
+                         procedures: ['Scaling and polishing', 'Oral examination'],
+                         prescriptions: ['Amoxicillin 500mg three times daily for 5 days']
+                     },
+                     {
+                         id: 4,
+                         date: '2024-03-20',
+                         type: 'test',
+                         title: 'Blood Work - Comprehensive Metabolic Panel',
+                         doctor: 'Dr. Tanvir Rahman',
+                         specialty: 'General Medicine',
+                         diagnosis: 'Routine Health Screening',
+                         notes: 'All values within normal range. Continue monitoring.',
+                         testResults: {
+                             glucose: '95 mg/dL (Normal)',
+                             cholesterol: '185 mg/dL (Normal)',
+                             triglycerides: '120 mg/dL (Normal)',
+                             creatinine: '0.9 mg/dL (Normal)'
+                         }
+                     },
+                     {
+                         id: 5,
+                         date: '2024-03-15',
+                         type: 'consultation',
+                         title: 'Pediatric Consultation',
+                         doctor: 'Dr. Kamrul Hasan',
+                         specialty: 'Pediatrics',
+                         diagnosis: 'Routine Vaccination',
+                         notes: 'Annual vaccinations administered successfully. Growth and development normal.',
+                         vaccinations: ['DTaP', 'MMR', 'Varicella', 'Polio']
+                     },
+                     {
+                         id: 6,
+                         date: '2024-03-10',
+                         type: 'consultation',
+                         title: 'Orthopedic Consultation',
+                         doctor: 'Dr. Farhana Ahmed',
+                         specialty: 'Orthopedics',
+                         diagnosis: 'Sprained Ankle',
+                         notes: 'Grade 1 ankle sprain. RICE protocol recommended.',
+                         treatment: 'Rest, Ice, Compression, Elevation',
+                         prescriptions: ['Ibuprofen 400mg every 6-8 hours', 'Diclofenac gel applied three times daily']
+                     },
+                     {
+                         id: 7,
+                         date: '2024-02-15',
+                         type: 'consultation',
+                         title: 'Cardiology Follow-up',
+                         doctor: 'Dr. Sadiya Akter',
+                         specialty: 'Cardiology',
+                         diagnosis: 'Hypertension Management',
+                         notes: 'Blood pressure well controlled. Lifestyle modifications discussed.',
+                         vitals: { bp: '125/82', heartRate: '70', weight: '182 lbs' }
+                     },
+                     {
+                         id: 8,
+                         date: '2024-01-20',
+                         type: 'test',
+                         title: 'Chest X-Ray',
+                         doctor: 'Dr. Ashraful Islam',
+                         specialty: 'General Medicine',
+                         diagnosis: 'Cough Evaluation',
+                         notes: 'Clear chest X-ray. No acute findings.',
+                         impressions: 'No acute cardiopulmonary disease'
+                     }
+                 ];
+
+                 renderTimeline();
+             }
+
+             function filterRecords() {
+                 const typeFilter = $('#type-filter').val();
+                 const doctorFilter = $('#doctor-filter').val();
+                 const sortBy = $('#sort-by').val();
+                 const dateFilter = $('#date-filter').val();
+
+                 let filtered = medicalRecords.filter(record => {
+                     const matchesType = typeFilter === 'all' || record.type === typeFilter;
+                     const matchesDoctor = doctorFilter === 'all' || record.doctor === doctorFilter;
+                     const matchesDate = !dateFilter || record.date === dateFilter;
+
+                     return matchesType && matchesDoctor && matchesDate;
+                 });
+
+                 // Sort records
+                 filtered.sort((a, b) => {
+                     switch(sortBy) {
+                         case 'date-asc':
+                             return new Date(a.date) - new Date(b.date);
+                         case 'date-desc':
+                             return new Date(b.date) - new Date(a.date);
+                         case 'doctor':
+                             return a.doctor.localeCompare(b.doctor);
+                         case 'type':
+                             return a.type.localeCompare(b.type);
+                         default:
+                             return new Date(b.date) - new Date(a.date);
+                     }
+                 });
+
+                 return filtered;
+             }
+
+             function renderTimeline() {
+                 const filteredRecords = filterRecords();
+                 let html = '';
+
+                 if (filteredRecords.length === 0) {
+                     html = `
+                         <div class="empty-state">
+                              <i class="fa fa-history"></i>
+                              <h4>No medical records found</h4>
+                              <p>No records match your current filters.</p>
+                         </div>
+                     `;
+                 } else {
+                     filteredRecords.forEach(record => {
+                         const typeIcons = {
+                             consultation: 'fa-stethoscope',
+                             prescription: 'fa-file-text',
+                             test: 'fa-flask',
+                             procedure: 'fa-medkit'
+                         };
+
+                         const typeColors = {
+                             consultation: '#667eea',
+                             prescription: '#28a745',
+                             test: '#ffc107',
+                             procedure: '#dc3545'
+                         };
+
+                         html += `
+                             <div class="timeline-item">
+                                 <div class="timeline-date">${new Date(record.date).toLocaleDateString()}</div>
+                                 <div class="timeline-content">
+                                     <div class="timeline-title">
+                                         <i class="fa ${typeIcons[record.type]}" style="color: ${typeColors[record.type]}; margin-right: 10px;"></i>
+                                         ${record.title}
+                                     </div>
+                                     <div class="timeline-doctor">
+                                         <i class="fa fa-user-md"></i> ${record.doctor} - ${record.specialty}
+                                     </div>
+                                     <p><strong>Diagnosis:</strong> ${record.diagnosis}</p>
+                                     <p><strong>Notes:</strong> ${record.notes}</p>
+
+                                     <div class="timeline-details">
+                                         ${record.vitals ? `
+                                             <div class="detail-item">
+                                                 <i class="fa fa-heartbeat"></i>
+                                                 <span>BP: ${record.vitals.bp}, HR: ${record.vitals.heartRate}</span>
+                                             </div>
+                                         ` : ''}
+                                         ${record.prescriptions ? `
+                                             <div class="detail-item">
+                                                 <i class="fa fa-pills"></i>
+                                                 <span>${record.prescriptions.length} medication(s)</span>
+                                             </div>
+                                         ` : ''}
+                                         ${record.procedures ? `
+                                             <div class="detail-item">
+                                                 <i class="fa fa-medkit"></i>
+                                                 <span>${record.procedures.length} procedure(s)</span>
+                                             </div>
+                                         ` : ''}
+                                     </div>
+
+                                     <div style="margin-top: 15px;">
+                                         <a href="#" class="btn btn-primary btn-sm" onclick="viewRecord(${record.id})">
+                                             <i class="fa fa-eye"></i> View Details
+                                         </a>
+                                     </div>
+                                 </div>
+                             </div>
+                         `;
+                     });
+                 }
+
+                 $('#medical-timeline').html(html);
+             }
+
+             // Global functions for onclick handlers
+             window.viewRecord = function(id) {
+                 const record = medicalRecords.find(r => r.id === id);
+                 if (record) {
+                     let detailsHtml = `
+                         <div class="row">
+                             <div class="col-md-6">
+                                 <h5>Record Information</h5>
+                                 <p><strong>Date:</strong> ${new Date(record.date).toLocaleDateString()}</p>
+                                 <p><strong>Type:</strong> ${record.type.charAt(0).toUpperCase() + record.type.slice(1)}</p>
+                                 <p><strong>Doctor:</strong> ${record.doctor}</p>
+                                 <p><strong>Specialty:</strong> ${record.specialty}</p>
+                                 <p><strong>Diagnosis:</strong> ${record.diagnosis}</p>
+                             </div>
+                             <div class="col-md-6">
+                                 <h5>Clinical Details</h5>
+                                 <p><strong>Notes:</strong> ${record.notes}</p>
+                     `;
+
+                     if (record.vitals) {
+                         detailsHtml += `<p><strong>Vitals:</strong> BP ${record.vitals.bp}, Heart Rate ${record.vitals.heartRate}`;
+                         if (record.vitals.weight) detailsHtml += `, Weight ${record.vitals.weight}`;
+                         if (record.vitals.temp) detailsHtml += `, Temperature ${record.vitals.temp}`;
+                         detailsHtml += `</p>`;
+                     }
+
+                     if (record.prescriptions && record.prescriptions.length > 0) {
+                         detailsHtml += `<h6>Prescriptions:</h6><ul>`;
+                         record.prescriptions.forEach(prescription => {
+                             detailsHtml += `<li>${prescription}</li>`;
+                         });
+                         detailsHtml += `</ul>`;
+                     }
+
+                     if (record.procedures && record.procedures.length > 0) {
+                         detailsHtml += `<h6>Procedures:</h6><ul>`;
+                         record.procedures.forEach(procedure => {
+                             detailsHtml += `<li>${procedure}</li>`;
+                         });
+                         detailsHtml += `</ul>`;
+                     }
+
+                     if (record.testResults) {
+                         detailsHtml += `<h6>Test Results:</h6>`;
+                         Object.entries(record.testResults).forEach(([test, result]) => {
+                             detailsHtml += `<p><strong>${test.charAt(0).toUpperCase() + test.slice(1)}:</strong> ${result}</p>`;
+                         });
+                     }
+
+                     if (record.vaccinations && record.vaccinations.length > 0) {
+                         detailsHtml += `<h6>Vaccinations:</h6><ul>`;
+                         record.vaccinations.forEach(vaccine => {
+                             detailsHtml += `<li>${vaccine}</li>`;
+                         });
+                         detailsHtml += `</ul>`;
+                     }
+
+                     if (record.treatment) {
+                         detailsHtml += `<p><strong>Treatment:</strong> ${record.treatment}</p>`;
+                     }
+
+                     detailsHtml += `
+                             </div>
+                         </div>
+                     `;
+
+                     $('#record-details').html(detailsHtml);
+                     $('#recordModal').modal('show');
+                 }
+             };
+
+             window.exportHistory = function(format) {
+                 alert(`Exporting medical history as ${format.toUpperCase()}. In a real application, this would generate and download a ${format.toUpperCase()} file containing all your medical records.`);
+             };
+         });
+     </script>
+
+</body>
+</html>

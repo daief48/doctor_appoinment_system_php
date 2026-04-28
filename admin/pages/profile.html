@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Profile - Health Center Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <div class="sidebar">
+        <div class="sidebar-logo">
+            <h5><i class="fas fa-hospital"></i> Health Center</h5>
+            <p>Admin Panel v1.0</p>
+        </div>
+        <ul class="nav-menu">
+            <li class="nav-item"><a href="index.html" class="nav-link"><i class="bi bi-graph-up"></i> Dashboard</a></li>
+            <li class="nav-item"><a href="doctors.html" class="nav-link"><i class="bi bi-person-check"></i> Doctors</a></li>
+            <li class="nav-item"><a href="patients.html" class="nav-link"><i class="bi bi-people"></i> Patients</a></li>
+            <li class="nav-item"><a href="appointments.html" class="nav-link"><i class="bi bi-calendar-event"></i> Appointments</a></li>
+            <li class="nav-item"><a href="payments.html" class="nav-link"><i class="bi bi-credit-card"></i> Payments</a></li>
+            <li class="nav-item"><a href="reports.html" class="nav-link"><i class="bi bi-bar-chart"></i> Reports</a></li>
+            <li class="nav-item"><a href="settings.html" class="nav-link"><i class="bi bi-gear"></i> Settings</a></li>
+        </ul>
+    </div>
+
+    <!-- Top Navigation Bar -->
+    <div class="topbar">
+        <div class="topbar-left">
+            <button class="toggle-sidebar-btn"><i class="bi bi-list"></i></button>
+            <h6 class="m-0">Admin Profile</h6>
+        </div>
+        <div class="topbar-right">
+            <div class="notification-bell" data-bs-toggle="dropdown">
+                <i class="bi bi-bell"></i>
+                <span class="notification-badge">3</span>
+            </div>
+            <div class="admin-profile" data-bs-toggle="dropdown">
+                <div class="admin-avatar">AD</div>
+                <span>Admin</span>
+            </div>
+            <div class="dropdown-menu dropdown-menu-end">
+                <a class="dropdown-item" href="profile.html">My Profile</a>
+                <a class="dropdown-item" href="#" onclick="logout()">Logout</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="dashboard-header">
+            <h2>My Profile</h2>
+            <p class="welcome-message">Manage your account information and preferences.</p>
+        </div>
+
+        <!-- Profile Tabs -->
+        <ul class="nav nav-tabs mb-4">
+            <li class="nav-item">
+                <a class="nav-link active" href="#profile-info" data-bs-toggle="tab">
+                    <i class="bi bi-person"></i> Profile Information
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#change-password" data-bs-toggle="tab">
+                    <i class="bi bi-shield-lock"></i> Change Password
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#security" data-bs-toggle="tab">
+                    <i class="bi bi-lock"></i> Security & Privacy
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#activity" data-bs-toggle="tab">
+                    <i class="bi bi-clock-history"></i> Activity Log
+                </a>
+            </li>
+        </ul>
+
+        <div class="tab-content">
+            <!-- Profile Information Tab -->
+            <div class="tab-pane fade show active" id="profile-info">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="card text-center">
+                            <div class="card-body pb-0">
+                                <div style="width: 120px; height: 120px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 50%; color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 3rem; margin: 20px auto;">AR</div>
+                                <h5 class="mt-3">Abdur Rahman</h5>
+                                <p class="text-muted">Administrator</p>
+                                <small class="text-muted">Member since January 2024</small>
+                                <div class="mt-3">
+                                    <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#uploadPhotoModal">
+                                        <i class="bi bi-cloud-upload"></i> Upload Photo
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card mt-3">
+                            <div class="card-header">
+                                <h6 class="mb-0">Permissions</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="mb-2">
+                                    <span class="badge bg-success"><i class="bi bi-check-circle"></i> Full Admin Access</span>
+                                </div>
+                                <div class="mb-2">
+                                    <span class="badge bg-primary"><i class="bi bi-check-circle"></i> User Management</span>
+                                </div>
+                                <div class="mb-2">
+                                    <span class="badge bg-primary"><i class="bi bi-check-circle"></i> Reports Access</span>
+                                </div>
+                                <div>
+                                    <span class="badge bg-primary"><i class="bi bi-check-circle"></i> Settings Access</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-8">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5>Personal Information</h5>
+                            </div>
+                            <div class="card-body">
+                                <form>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label">First Name*</label>
+                                            <input type="text" class="form-control" value="Abdur" required>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label">Last Name*</label>
+                                            <input type="text" class="form-control" value="Rahman" required>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Email Address*</label>
+                                        <input type="email" class="form-control" value="abdur.rahman@healthcenter.com.bd" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Phone Number</label>
+                                        <input type="tel" class="form-control" value="+880 1711-000000">
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label">Job Title</label>
+                                            <input type="text" class="form-control" value="System Administrator">
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label">Department</label>
+                                            <input type="text" class="form-control" value="Administration">
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Bio</label>
+                                        <textarea class="form-control" rows="3" placeholder="Tell us about yourself...">Experienced healthcare administrator with 5+ years of experience managing medical facilities.</textarea>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary" onclick="showToast('Profile updated successfully!')">
+                                        <i class="bi bi-save"></i> Save Changes
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Change Password Tab -->
+            <div class="tab-pane fade" id="change-password">
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5>Change Password</h5>
+                            </div>
+                            <div class="card-body">
+                                <form id="changePasswordForm">
+                                    <div class="mb-3">
+                                        <label class="form-label">Current Password*</label>
+                                        <input type="password" class="form-control" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">New Password*</label>
+                                        <input type="password" class="form-control" id="newPassword" required minlength="8">
+                                        <small class="text-muted">At least 8 characters, with uppercase, lowercase, and numbers</small>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Confirm Password*</label>
+                                        <input type="password" class="form-control" id="confirmPassword" required>
+                                    </div>
+                                    <div class="alert alert-info">
+                                        <i class="bi bi-info-circle"></i> <strong>Password Requirements:</strong>
+                                        <ul class="mb-0 mt-2">
+                                            <li>Minimum 8 characters long</li>
+                                            <li>At least one uppercase letter</li>
+                                            <li>At least one lowercase letter</li>
+                                            <li>At least one number</li>
+                                            <li>At least one special character (!@#$%^&*)</li>
+                                        </ul>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary w-100" onclick="changePassword(event)">
+                                        <i class="bi bi-save"></i> Update Password
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Security & Privacy Tab -->
+            <div class="tab-pane fade" id="security">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="card mb-3">
+                            <div class="card-header">
+                                <h5>Two-Factor Authentication</h5>
+                            </div>
+                            <div class="card-body">
+                                <p class="text-muted">Two-factor authentication adds an extra layer of security to your account.</p>
+                                <div class="alert alert-warning">
+                                    <i class="bi bi-exclamation-triangle"></i> Two-factor authentication is currently <strong>disabled</strong>
+                                </div>
+                                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#enable2FAModal">
+                                    <i class="bi bi-shield-check"></i> Enable Two-Factor Auth
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="card mb-3">
+                            <div class="card-header">
+                                <h5>Login History</h5>
+                            </div>
+                            <div class="card-body p-0">
+                                <div class="table-responsive">
+                                    <table class="table table-hover mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th>Date & Time</th>
+                                                <th>Device</th>
+                                                <th>IP Address</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Today, 2:35 PM</td>
+                                                <td>Chrome on Windows</td>
+                                                <td>192.168.1.1</td>
+                                                <td><span class="badge bg-success">Success</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Today, 9:15 AM</td>
+                                                <td>Safari on Mac</td>
+                                                <td>192.168.1.2</td>
+                                                <td><span class="badge bg-success">Success</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Yesterday, 8:40 PM</td>
+                                                <td>Chrome on Windows</td>
+                                                <td>192.168.1.1</td>
+                                                <td><span class="badge bg-success">Success</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>January 20, 3:12 PM</td>
+                                                <td>Unknown Device</td>
+                                                <td>203.0.113.42</td>
+                                                <td><span class="badge bg-danger">Failed</span></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header">
+                                <h5>Account Preferences</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox" checked>
+                                        Email me login alerts
+                                    </label>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox" checked>
+                                        Email me security updates
+                                    </label>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox">
+                                        Show password on login
+                                    </label>
+                                </div>
+                                <button class="btn btn-primary" onclick="showToast('Preferences updated!')">
+                                    <i class="bi bi-save"></i> Save Preferences
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5>Account Status</h5>
+                            </div>
+                            <div class="card-body">
+                                <p class="text-muted mb-3">Account created on January 15, 2024</p>
+                                <div class="list-group">
+                                    <div class="list-group-item">
+                                        <h6 class="mb-0">Status</h6>
+                                        <span class="badge bg-success">Active</span>
+                                    </div>
+                                    <div class="list-group-item">
+                                        <h6 class="mb-0">Role</h6>
+                                        <span class="text-muted">Administrator</span>
+                                    </div>
+                                    <div class="list-group-item">
+                                        <h6 class="mb-0">Email Verified</h6>
+                                        <span class="badge bg-success"><i class="bi bi-check-circle"></i> Yes</span>
+                                    </div>
+                                </div>
+                                <hr>
+                                <button class="btn btn-danger w-100" data-bs-toggle="modal" data-bs-target="#deleteAccountModal">
+                                    <i class="bi bi-trash"></i> Delete Account
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Activity Log Tab -->
+            <div class="tab-pane fade" id="activity">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5>Recent Activity</h5>
+                        <select class="form-select" style="width: 200px;">
+                            <option>All Activities</option>
+                            <option>Logins</option>
+                            <option>Profile Changes</option>
+                            <option>Settings Changes</option>
+                        </select>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="list-group list-group-flush">
+                            <div class="list-group-item">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <h6 class="mb-1"><i class="bi bi-box-arrow-in-right text-primary"></i> Admin Login</h6>
+                                        <p class="text-muted mb-0">Successfully logged in from Chrome on Windows (192.168.1.1)</p>
+                                    </div>
+                                    <small class="text-muted">Today, 2:35 PM</small>
+                                </div>
+                            </div>
+                            <div class="list-group-item">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <h6 class="mb-1"><i class="bi bi-pencil text-info"></i> Profile Updated</h6>
+                                        <p class="text-muted mb-0">Updated profile information</p>
+                                    </div>
+                                    <small class="text-muted">Today, 10:15 AM</small>
+                                </div>
+                            </div>
+                            <div class="list-group-item">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <h6 class="mb-1"><i class="bi bi-gear text-warning"></i> Settings Modified</h6>
+                                        <p class="text-muted mb-0">Changed general settings</p>
+                                    </div>
+                                    <small class="text-muted">Yesterday, 3:45 PM</small>
+                                </div>
+                            </div>
+                            <div class="list-group-item">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <h6 class="mb-1"><i class="bi bi-box-arrow-in-right text-primary"></i> Admin Login</h6>
+                                        <p class="text-muted mb-0">Successfully logged in from Safari on Mac (192.168.1.2)</p>
+                                    </div>
+                                    <small class="text-muted">Yesterday, 9:20 AM</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Upload Photo Modal -->
+    <div class="modal fade" id="uploadPhotoModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Upload Profile Photo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Choose Image</label>
+                        <input type="file" class="form-control" accept="image/*">
+                    </div>
+                    <p class="text-muted small">Recommended: Square image, at least 200x200px</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="showToast('Photo uploaded successfully!'); bootstrap.Modal.getInstance(document.getElementById('uploadPhotoModal')).hide();">
+                        <i class="bi bi-upload"></i> Upload
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Account Modal -->
+    <div class="modal fade" id="deleteAccountModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content border-danger">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title"><i class="bi bi-exclamation-triangle"></i> Delete Account</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p><strong>Warning:</strong> This action cannot be undone. Deleting your account will:</p>
+                    <ul>
+                        <li>Permanently remove all your account data</li>
+                        <li>Disable access to the admin panel</li>
+                        <li>Delete all activity logs associated with your account</li>
+                    </ul>
+                    <p class="text-muted">To confirm deletion, type your email address below:</p>
+                    <input type="email" class="form-control" placeholder="admin@healthcenter.com.bd">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="showToast('Account deletion requests have been processed!', 'warning');">
+                        <i class="bi bi-trash"></i> Delete Account
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/script.js"></script>
+    <script>
+        function changePassword(e) {
+            e.preventDefault();
+            const password = document.getElementById('newPassword').value;
+            const confirm = document.getElementById('confirmPassword').value;
+
+            if (password !== confirm) {
+                showToast('Passwords do not match!', 'danger');
+                return;
+            }
+
+            showToast('Password changed successfully!', 'success');
+            document.getElementById('changePasswordForm').reset();
+        }
+    </script>
+</body>
+</html>

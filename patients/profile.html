@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <title>Health Center - Profile</title>
+     <meta charset="UTF-8">
+     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+     <meta name="description" content="">
+     <meta name="keywords" content="">
+     <meta name="author" content="Tooplate">
+     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+     <link rel="stylesheet" href="css/bootstrap.min.css">
+     <link rel="stylesheet" href="css/font-awesome.min.css">
+     <link rel="stylesheet" href="css/animate.css">
+     <link rel="stylesheet" href="css/tooplate-style.css">
+
+     <style>
+         .profile-container {
+             background: white;
+             border-radius: 10px;
+             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+             padding: 30px;
+             margin-bottom: 30px;
+         }
+         .profile-header {
+             text-align: center;
+             margin-bottom: 30px;
+         }
+         .profile-picture {
+             width: 150px;
+             height: 150px;
+             border-radius: 50%;
+             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+             display: flex;
+             align-items: center;
+             justify-content: center;
+             margin: 0 auto 20px;
+             position: relative;
+             cursor: pointer;
+         }
+         .profile-picture img {
+             width: 100%;
+             height: 100%;
+             border-radius: 50%;
+             object-fit: cover;
+         }
+         .profile-picture .initials {
+             font-size: 4em;
+             color: white;
+             font-weight: bold;
+         }
+         .profile-picture .edit-overlay {
+             position: absolute;
+             bottom: 0;
+             right: 0;
+             background: #667eea;
+             color: white;
+             border-radius: 50%;
+             width: 40px;
+             height: 40px;
+             display: flex;
+             align-items: center;
+             justify-content: center;
+             opacity: 0;
+             transition: opacity 0.3s ease;
+         }
+         .profile-picture:hover .edit-overlay {
+             opacity: 1;
+         }
+         .profile-name {
+             font-size: 2em;
+             color: #333;
+             margin-bottom: 5px;
+         }
+         .profile-email {
+             color: #666;
+             font-size: 1.1em;
+         }
+         .profile-tabs {
+             margin-bottom: 30px;
+         }
+         .profile-tabs .nav-tabs {
+             border-bottom: 2px solid #eee;
+         }
+         .profile-tabs .nav-tabs li a {
+             border: none;
+             border-bottom: 2px solid transparent;
+             color: #666;
+             font-weight: 500;
+         }
+         .profile-tabs .nav-tabs li.active a,
+         .profile-tabs .nav-tabs li a:hover {
+             background: transparent;
+             border-bottom-color: #667eea;
+             color: #667eea;
+         }
+         .tab-content {
+             padding: 20px 0;
+         }
+         .form-section {
+             background: #f8f9fa;
+             padding: 20px;
+             border-radius: 5px;
+             margin-bottom: 20px;
+         }
+         .form-section h4 {
+             color: #667eea;
+             margin-bottom: 20px;
+             border-bottom: 2px solid #667eea;
+             padding-bottom: 10px;
+         }
+         .form-group label {
+             font-weight: 500;
+             color: #333;
+         }
+         .btn-profile {
+             padding: 10px 30px;
+             border-radius: 5px;
+             font-weight: bold;
+             margin-right: 10px;
+         }
+         .medical-info {
+             display: grid;
+             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+             gap: 20px;
+         }
+         .info-card {
+             background: white;
+             border: 1px solid #ddd;
+             border-radius: 5px;
+             padding: 15px;
+         }
+         .info-card h5 {
+             color: #667eea;
+             margin-bottom: 10px;
+         }
+         .emergency-contact {
+             background: #fff3cd;
+             border: 1px solid #ffeaa7;
+             border-radius: 5px;
+             padding: 15px;
+             margin-top: 20px;
+         }
+         .password-strength {
+             margin-top: 5px;
+             font-size: 0.9em;
+         }
+         .password-strength.weak {
+             color: #dc3545;
+         }
+         .password-strength.medium {
+             color: #ffc107;
+         }
+         .password-strength.strong {
+             color: #28a745;
+         }
+         @media (max-width: 768px) {
+             .profile-picture {
+                 width: 120px;
+                 height: 120px;
+             }
+             .profile-name {
+                 font-size: 1.5em;
+             }
+             .medical-info {
+                 grid-template-columns: 1fr;
+             }
+         }
+     </style>
+</head>
+<body>
+
+     <!-- HEADER -->
+     <header>
+          <div class="container">
+               <div class="row">
+                    <div class="col-md-8 col-sm-7">
+                         <p>Welcome back, Rohim Uddin!</p>
+                    </div>
+                    <div class="col-md-4 col-sm-5 text-align-right">
+                         <span class="email-icon"><i class="fa fa-envelope-o"></i> <a href="#">rohim.uddin@email.com</a></span>
+                         <span class="logout-icon"><i class="fa fa-sign-out"></i> <a href="login.html">Logout</a></span>
+                    </div>
+               </div>
+          </div>
+     </header>
+
+     <!-- MENU -->
+     <section class="navbar navbar-default navbar-static-top" role="navigation">
+          <div class="container">
+
+               <div class="navbar-header">
+                    <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                         <span class="icon icon-bar"></span>
+                         <span class="icon icon-bar"></span>
+                         <span class="icon icon-bar"></span>
+                    </button>
+
+                    <!-- lOGO TEXT HERE -->
+                    <a href="index.html" class="navbar-brand"><i class="fa fa-h-square"></i>ealth Center</a>
+               </div>
+
+               <!-- MENU LINKS -->
+               <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                         <li><a href="#top" class="smoothScroll"><i class="fa fa-home"></i> Home</a></li>
+                         <li><a href="#about" class="smoothScroll"><i class="fa fa-info-circle"></i> About</a></li>
+                         <li><a href="#team" class="smoothScroll"><i class="fa fa-user-md"></i> Doctors</a></li>
+                         <li><a href="#google-map" class="smoothScroll"><i class="fa fa-map-marker"></i> Contact</a></li>
+                         <li class="appointment-btn">
+                              <a href="#appointment">
+                                   <i class="fa fa-calendar-plus-o"></i> Book Appointment
+                              </a>
+                         </li>
+                         <li class="dropdown">
+                              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                   <i class="fa fa-user-shield"></i> Portal <i class="fa fa-caret-down"></i>
+                              </a>
+                              <ul class="dropdown-menu">
+                                   <li><a href="login.html"><i class="fa fa-sign-in"></i> Login</a></li>
+                                   <li><a href="register.html"><i class="fa fa-user-plus"></i> Register</a></li>
+                                   <li class="divider"></li>
+                                   <li><a href="dashboard.html"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+                                   <li><a href="book-appointment.html"><i class="fa fa-calendar-plus-o"></i> Appointments</a></li>
+                                   <li><a href="payments.html"><i class="fa fa-credit-card"></i> Payments</a></li>
+                                   <li><a href="prescriptions.html"><i class="fa fa-file-text"></i> Prescriptions</a></li>
+                                   <li><a href="profile.html"><i class="fa fa-user"></i> Profile</a></li>
+                                   <li class="divider"></li>
+                                   <li><a href="medical-history.html"><i class="fa fa-history"></i> History</a></li>
+                                   <li><a href="notifications.html"><i class="fa fa-bell"></i> Notifications</a></li>
+                              </ul>
+                         </li>
+                    </ul>
+               </div>
+          </div>
+     </section>
+<!-- PROFILE SECTION -->
+     <section id="profile" style="padding: 50px 0;">
+          <div class="container">
+               <div class="row">
+                    <div class="col-md-12">
+
+                         <div class="profile-container">
+                              <div class="profile-header">
+                                   <div class="profile-picture" onclick="changeProfilePicture()">
+                                        <div class="initials">RU</div>
+                                        <div class="edit-overlay">
+                                             <i class="fa fa-camera"></i>
+                                        </div>
+                                   </div>
+                                   <h2 class="profile-name">Rohim Uddin</h2>
+                                   <p class="profile-email">rohim.uddin@email.com</p>
+                                   <p><i class="fa fa-phone"></i> +880 171 234 5678 | <i class="fa fa-map-marker"></i> Dhaka, Bangladesh</p>
+                              </div>
+
+                              <!-- PROFILE TABS -->
+                              <div class="profile-tabs">
+                                   <ul class="nav nav-tabs" role="tablist">
+                                        <li class="active"><a href="#personal" data-toggle="tab">Personal Info</a></li>
+                                        <li><a href="#medical" data-toggle="tab">Medical Info</a></li>
+                                        <li><a href="#security" data-toggle="tab">Security</a></li>
+                                        <li><a href="#preferences" data-toggle="tab">Preferences</a></li>
+                                   </ul>
+
+                                   <div class="tab-content">
+                                        <!-- PERSONAL INFO TAB -->
+                                        <div class="tab-pane active" id="personal">
+                                             <form id="personal-form">
+                                                  <div class="form-section">
+                                                       <h4><i class="fa fa-user"></i> Basic Information</h4>
+                                                       <div class="row">
+                                                            <div class="col-md-6">
+                                                                 <div class="form-group">
+                                                                      <label for="firstName">First Name</label>
+                                                                      <input type="text" class="form-control" id="firstName" value="Rohim" required>
+                                                                 </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                 <div class="form-group">
+                                                                      <label for="lastName">Last Name</label>
+                                                                      <input type="text" class="form-control" id="lastName" value="Uddin" required>
+                                                                 </div>
+                                                            </div>
+                                                       </div>
+                                                       <div class="row">
+                                                            <div class="col-md-6">
+                                                                 <div class="form-group">
+                                                                      <label for="email">Email</label>
+                                                                      <input type="email" class="form-control" id="email" value="rohim.uddin@email.com" required>
+                                                                 </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                 <div class="form-group">
+                                                                      <label for="phone">Phone</label>
+                                                                      <input type="tel" class="form-control" id="phone" value="+880 171 234 5678" required>
+                                                                 </div>
+                                                            </div>
+                                                       </div>
+                                                       <div class="row">
+                                                            <div class="col-md-6">
+                                                                 <div class="form-group">
+                                                                      <label for="dob">Date of Birth</label>
+                                                                      <input type="date" class="form-control" id="dob" value="1985-06-15" required>
+                                                                 </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                 <div class="form-group">
+                                                                      <label for="gender">Gender</label>
+                                                                      <select class="form-control" id="gender" required>
+                                                                           <option value="male" selected>Male</option>
+                                                                           <option value="female">Female</option>
+                                                                           <option value="other">Other</option>
+                                                                      </select>
+                                                                 </div>
+                                                            </div>
+                                                       </div>
+                                                  </div>
+
+                                                  <div class="form-section">
+                                                       <h4><i class="fa fa-map-marker"></i> Address Information</h4>
+                                                       <div class="form-group">
+                                                            <label for="address">Street Address</label>
+                                                            <input type="text" class="form-control" id="address" value="House 25, Road 10, Dhanmondi" required>
+                                                       </div>
+                                                       <div class="row">
+                                                            <div class="col-md-4">
+                                                                 <div class="form-group">
+                                                                      <label for="city">City</label>
+                                                                      <input type="text" class="form-control" id="city" value="Dhaka" required>
+                                                                 </div>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                 <div class="form-group">
+                                                                      <label for="state">State</label>
+                                                                      <input type="text" class="form-control" id="state" value="Dhaka" required>
+                                                                 </div>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                 <div class="form-group">
+                                                                      <label for="zip">ZIP Code</label>
+                                                                      <input type="text" class="form-control" id="zip" value="1205" required>
+                                                                 </div>
+                                                            </div>
+                                                       </div>
+                                                  </div>
+
+                                                  <div class="emergency-contact">
+                                                       <h4><i class="fa fa-exclamation-triangle"></i> Emergency Contact</h4>
+                                                       <div class="row">
+                                                            <div class="col-md-6">
+                                                                 <div class="form-group">
+                                                                      <label for="emergencyName">Contact Name</label>
+                                                                      <input type="text" class="form-control" id="emergencyName" value="Sadiya Akter" required>
+                                                                 </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                 <div class="form-group">
+                                                                      <label for="emergencyPhone">Contact Phone</label>
+                                                                      <input type="tel" class="form-control" id="emergencyPhone" value="+880 181 987 6543" required>
+                                                                 </div>
+                                                            </div>
+                                                       </div>
+                                                       <div class="form-group">
+                                                            <label for="emergencyRelation">Relationship</label>
+                                                            <input type="text" class="form-control" id="emergencyRelation" value="Wife" required>
+                                                       </div>
+                                                  </div>
+
+                                                  <div style="text-align: center; margin-top: 30px;">
+                                                       <button type="submit" class="btn btn-primary btn-profile">
+                                                            <i class="fa fa-save"></i> Save Changes
+                                                       </button>
+                                                       <button type="button" class="btn btn-default btn-profile" onclick="resetForm()">
+                                                            <i class="fa fa-undo"></i> Reset
+                                                       </button>
+                                                  </div>
+                                             </form>
+                                        </div>
+
+                                        <!-- MEDICAL INFO TAB -->
+                                        <div class="tab-pane" id="medical">
+                                             <div class="medical-info">
+                                                  <div class="info-card">
+                                                       <h5><i class="fa fa-tint"></i> Blood Type</h5>
+                                                       <p>O+</p>
+                                                       <small class="text-muted">Last updated: March 2024</small>
+                                                  </div>
+                                                  <div class="info-card">
+                                                       <h5><i class="fa fa-allergies"></i> Allergies</h5>
+                                                       <p>Penicillin, Shellfish</p>
+                                                       <small class="text-muted">Last updated: February 2024</small>
+                                                  </div>
+                                                  <div class="info-card">
+                                                       <h5><i class="fa fa-pills"></i> Current Medications</h5>
+                                                       <p>Lisinopril 10mg daily<br>Amlodipine 5mg daily</p>
+                                                       <small class="text-muted">Last updated: April 2024</small>
+                                                  </div>
+                                                  <div class="info-card">
+                                                       <h5><i class="fa fa-heartbeat"></i> Chronic Conditions</h5>
+                                                       <p>Hypertension</p>
+                                                       <small class="text-muted">Last updated: January 2024</small>
+                                                  </div>
+                                             </div>
+
+                                             <div style="text-align: center; margin-top: 30px;">
+                                                  <button class="btn btn-primary btn-profile" onclick="updateMedicalInfo()">
+                                                       <i class="fa fa-edit"></i> Update Medical Information
+                                                  </button>
+                                             </div>
+                                        </div>
+
+                                        <!-- SECURITY TAB -->
+                                        <div class="tab-pane" id="security">
+                                             <form id="security-form">
+                                                  <div class="form-section">
+                                                       <h4><i class="fa fa-lock"></i> Change Password</h4>
+                                                       <div class="form-group">
+                                                            <label for="currentPassword">Current Password</label>
+                                                            <input type="password" class="form-control" id="currentPassword" required>
+                                                       </div>
+                                                       <div class="form-group">
+                                                            <label for="newPassword">New Password</label>
+                                                            <input type="password" class="form-control" id="newPassword" required>
+                                                            <div class="password-strength" id="password-strength"></div>
+                                                       </div>
+                                                       <div class="form-group">
+                                                            <label for="confirmPassword">Confirm New Password</label>
+                                                            <input type="password" class="form-control" id="confirmPassword" required>
+                                                            <div class="error-message" id="password-error"></div>
+                                                       </div>
+                                                  </div>
+
+                                                  <div class="form-section">
+                                                       <h4><i class="fa fa-shield"></i> Security Settings</h4>
+                                                       <div class="form-group">
+                                                            <div class="checkbox">
+                                                                 <label>
+                                                                      <input type="checkbox" id="twoFactor" checked> Enable Two-Factor Authentication
+                                                                 </label>
+                                                            </div>
+                                                       </div>
+                                                       <div class="form-group">
+                                                            <div class="checkbox">
+                                                                 <label>
+                                                                      <input type="checkbox" id="loginAlerts" checked> Email alerts for new logins
+                                                                 </label>
+                                                            </div>
+                                                       </div>
+                                                       <div class="form-group">
+                                                            <div class="checkbox">
+                                                                 <label>
+                                                                      <input type="checkbox" id="sessionTimeout"> Auto-logout after 30 minutes of inactivity
+                                                                 </label>
+                                                            </div>
+                                                       </div>
+                                                  </div>
+
+                                                  <div style="text-align: center; margin-top: 30px;">
+                                                       <button type="submit" class="btn btn-primary btn-profile">
+                                                            <i class="fa fa-save"></i> Update Security Settings
+                                                       </button>
+                                                  </div>
+                                             </form>
+                                        </div>
+
+                                        <!-- PREFERENCES TAB -->
+                                        <div class="tab-pane" id="preferences">
+                                             <form id="preferences-form">
+                                                  <div class="form-section">
+                                                       <h4><i class="fa fa-bell"></i> Notification Preferences</h4>
+                                                       <div class="form-group">
+                                                            <div class="checkbox">
+                                                                 <label>
+                                                                      <input type="checkbox" id="emailNotifications" checked> Email notifications for appointments
+                                                                 </label>
+                                                            </div>
+                                                       </div>
+                                                       <div class="form-group">
+                                                            <div class="checkbox">
+                                                                 <label>
+                                                                      <input type="checkbox" id="smsNotifications"> SMS notifications for appointments
+                                                                 </label>
+                                                            </div>
+                                                       </div>
+                                                       <div class="form-group">
+                                                            <div class="checkbox">
+                                                                 <label>
+                                                                      <input type="checkbox" id="prescriptionAlerts" checked> Alerts for new prescriptions
+                                                                 </label>
+                                                            </div>
+                                                       </div>
+                                                       <div class="form-group">
+                                                            <div class="checkbox">
+                                                                 <label>
+                                                                      <input type="checkbox" id="paymentReminders" checked> Payment due reminders
+                                                                 </label>
+                                                            </div>
+                                                       </div>
+                                                  </div>
+
+                                                  <div class="form-section">
+                                                       <h4><i class="fa fa-language"></i> Language & Display</h4>
+                                                       <div class="form-group">
+                                                            <label for="language">Preferred Language</label>
+                                                            <select class="form-control" id="language">
+                                                                 <option value="en" selected>English</option>
+                                                                 <option value="bn" selected>Bangla</option>
+                                                            </select>
+                                                       </div>
+                                                       <div class="form-group">
+                                                            <label for="timezone">Timezone</label>
+                                                            <select class="form-control" id="timezone">
+                                                                 <option value="+6" selected>Bangladesh Standard Time (BST) (UTC+6)</option>
+                                                            </select>
+                                                       </div>
+                                                  </div>
+
+                                                  <div style="text-align: center; margin-top: 30px;">
+                                                       <button type="submit" class="btn btn-primary btn-profile">
+                                                            <i class="fa fa-save"></i> Save Preferences
+                                                       </button>
+                                                  </div>
+                                             </form>
+                                        </div>
+                                   </div>
+                              </div>
+                         </div>
+
+                    </div>
+               </div>
+          </div>
+     </section>
+
+     <!-- SCRIPTS -->
+     <script src="js/jquery.js"></script>
+     <script src="js/bootstrap.min.js"></script>
+     <script>
+         $(document).ready(function() {
+             // Password strength checker
+             $('#newPassword').on('input', function() {
+                 const password = $(this).val();
+                 const strength = checkPasswordStrength(password);
+                 $('#password-strength').removeClass('weak medium strong').addClass(strength.class).text(strength.text);
+             });
+
+             // Security form validation
+             $('#security-form').on('submit', function(e) {
+                 e.preventDefault();
+
+                 const newPassword = $('#newPassword').val();
+                 const confirmPassword = $('#confirmPassword').val();
+
+                 $('#password-error').text('');
+
+                 if (newPassword !== confirmPassword) {
+                     $('#password-error').text('Passwords do not match');
+                     return;
+                 }
+
+                 if (checkPasswordStrength(newPassword).class === 'weak') {
+                     $('#password-error').text('Please choose a stronger password');
+                     return;
+                 }
+
+                 alert('Security settings updated successfully!');
+             });
+
+             // Form submissions
+             $('#personal-form, #preferences-form').on('submit', function(e) {
+                 e.preventDefault();
+                 alert('Profile updated successfully!');
+             });
+         });
+
+         function checkPasswordStrength(password) {
+             let score = 0;
+             if (password.length >= 8) score++;
+             if (/[a-z]/.test(password)) score++;
+             if (/[A-Z]/.test(password)) score++;
+             if (/[0-9]/.test(password)) score++;
+             if (/[^A-Za-z0-9]/.test(password)) score++;
+
+             if (score <= 2) return { class: 'weak', text: 'Weak password' };
+             if (score <= 3) return { class: 'medium', text: 'Medium strength' };
+             return { class: 'strong', text: 'Strong password' };
+         }
+
+         function changeProfilePicture() {
+             alert('Profile picture upload feature would be implemented here. In a real application, this would open a file picker and upload the selected image.');
+         }
+
+         function updateMedicalInfo() {
+             alert('Medical information update feature would be implemented here. In a real application, this would open a form to update medical details.');
+         }
+
+         function resetForm() {
+             if (confirm('Are you sure you want to reset all changes?')) {
+                 $('#personal-form')[0].reset();
+             }
+         }
+     </script>
+
+</body>
+</html>

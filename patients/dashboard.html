@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <title>Health Center - Dashboard</title>
+     <meta charset="UTF-8">
+     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+     <meta name="description" content="">
+     <meta name="keywords" content="">
+     <meta name="author" content="Tooplate">
+     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+     <link rel="stylesheet" href="css/bootstrap.min.css">
+     <link rel="stylesheet" href="css/font-awesome.min.css">
+     <link rel="stylesheet" href="css/animate.css">
+     <link rel="stylesheet" href="css/tooplate-style.css">
+
+     <style>
+         .dashboard-header {
+             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+             color: white;
+             padding: 30px 0;
+             margin-bottom: 30px;
+         }
+         .welcome-message h1 {
+             margin: 0;
+             font-size: 2.5em;
+         }
+         .welcome-message p {
+             margin: 10px 0 0 0;
+             opacity: 0.9;
+         }
+         .stats-card {
+             background: white;
+             border-radius: 10px;
+             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+             padding: 25px;
+             margin-bottom: 20px;
+             transition: transform 0.3s ease;
+         }
+         .stats-card:hover {
+             transform: translateY(-5px);
+         }
+         .stats-icon {
+             font-size: 3em;
+             margin-bottom: 15px;
+             opacity: 0.8;
+         }
+         .stats-number {
+             font-size: 2.5em;
+             font-weight: bold;
+             margin: 0;
+         }
+         .stats-title {
+             font-size: 1.1em;
+             color: #666;
+             margin: 5px 0 0 0;
+         }
+         .quick-actions {
+             background: white;
+             border-radius: 10px;
+             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+             padding: 25px;
+             margin-bottom: 30px;
+         }
+         .quick-actions h3 {
+             margin-bottom: 20px;
+             color: #333;
+         }
+         .action-btn {
+             display: inline-block;
+             padding: 12px 25px;
+             margin: 5px;
+             border-radius: 5px;
+             text-decoration: none;
+             font-weight: bold;
+             transition: all 0.3s ease;
+         }
+         .action-btn:hover {
+             transform: translateY(-2px);
+             box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+         }
+         .recent-activity {
+             background: white;
+             border-radius: 10px;
+             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+             padding: 25px;
+         }
+         .activity-item {
+             padding: 15px 0;
+             border-bottom: 1px solid #eee;
+         }
+         .activity-item:last-child {
+             border-bottom: none;
+         }
+         .activity-icon {
+             width: 40px;
+             height: 40px;
+             border-radius: 50%;
+             display: inline-flex;
+             align-items: center;
+             justify-content: center;
+             margin-right: 15px;
+         }
+         .activity-content h5 {
+             margin: 0;
+             font-size: 1em;
+         }
+         .activity-content p {
+             margin: 5px 0 0 0;
+             color: #666;
+             font-size: 0.9em;
+         }
+         .sidebar {
+             background: white;
+             border-radius: 10px;
+             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+             padding: 25px;
+             margin-bottom: 30px;
+         }
+         .sidebar ul {
+             list-style: none;
+             padding: 0;
+         }
+         .sidebar li {
+             margin-bottom: 10px;
+         }
+         .sidebar a {
+             color: #333;
+             text-decoration: none;
+             display: block;
+             padding: 10px;
+             border-radius: 5px;
+             transition: background 0.3s ease;
+         }
+         .sidebar a:hover, .sidebar a.active {
+             background: #f8f9fa;
+             color: #667eea;
+         }
+         .sidebar a i {
+             margin-right: 10px;
+             width: 20px;
+         }
+         @media (max-width: 768px) {
+             .dashboard-header {
+                 text-align: center;
+             }
+             .action-btn {
+                 display: block;
+                 margin: 5px 0;
+             }
+         }
+     </style>
+</head>
+<body>
+
+     <!-- HEADER -->
+     <header>
+          <div class="container">
+               <div class="row">
+                    <div class="col-md-8 col-sm-7">
+                         <p>Welcome back, Rohim Uddin!</p>
+                    </div>
+                    <div class="col-md-4 col-sm-5 text-align-right">
+                         <span class="email-icon"><i class="fa fa-envelope-o"></i> <a href="#">rohim.uddin@email.com</a></span>
+                         <span class="logout-icon"><i class="fa fa-sign-out"></i> <a href="login.html">Logout</a></span>
+                    </div>
+               </div>
+          </div>
+     </header>
+
+     <!-- MENU -->
+     <section class="navbar navbar-default navbar-static-top" role="navigation">
+          <div class="container">
+
+               <div class="navbar-header">
+                    <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                         <span class="icon icon-bar"></span>
+                         <span class="icon icon-bar"></span>
+                         <span class="icon icon-bar"></span>
+                    </button>
+
+                    <!-- lOGO TEXT HERE -->
+                    <a href="index.html" class="navbar-brand"><i class="fa fa-h-square"></i>ealth Center</a>
+               </div>
+
+               <!-- MENU LINKS -->
+               <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                         <li><a href="#top" class="smoothScroll"><i class="fa fa-home"></i> Home</a></li>
+                         <li><a href="#about" class="smoothScroll"><i class="fa fa-info-circle"></i> About</a></li>
+                         <li><a href="#team" class="smoothScroll"><i class="fa fa-user-md"></i> Doctors</a></li>
+                         <li><a href="#google-map" class="smoothScroll"><i class="fa fa-map-marker"></i> Contact</a></li>
+                         <li class="appointment-btn">
+                              <a href="#appointment">
+                                   <i class="fa fa-calendar-plus-o"></i> Book Appointment
+                              </a>
+                         </li>
+                         <li class="dropdown">
+                              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                   <i class="fa fa-user-shield"></i> Portal <i class="fa fa-caret-down"></i>
+                              </a>
+                              <ul class="dropdown-menu">
+                                   <li><a href="login.html"><i class="fa fa-sign-in"></i> Login</a></li>
+                                   <li><a href="register.html"><i class="fa fa-user-plus"></i> Register</a></li>
+                                   <li class="divider"></li>
+                                   <li><a href="dashboard.html"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+                                   <li><a href="book-appointment.html"><i class="fa fa-calendar-plus-o"></i> Appointments</a></li>
+                                   <li><a href="payments.html"><i class="fa fa-credit-card"></i> Payments</a></li>
+                                   <li><a href="prescriptions.html"><i class="fa fa-file-text"></i> Prescriptions</a></li>
+                                   <li><a href="profile.html"><i class="fa fa-user"></i> Profile</a></li>
+                                   <li class="divider"></li>
+                                   <li><a href="medical-history.html"><i class="fa fa-history"></i> History</a></li>
+                                   <li><a href="notifications.html"><i class="fa fa-bell"></i> Notifications</a></li>
+                              </ul>
+                         </li>
+                    </ul>
+               </div>
+          </div>
+     </section>
+<!-- DASHBOARD HEADER -->
+     <section class="dashboard-header">
+          <div class="container">
+               <div class="row">
+                    <div class="col-md-12">
+                         <div class="welcome-message">
+                              <h1>Welcome back, Rohim!</h1>
+                              <p class="text-white" style="color: white;">Here's an overview of your health records and upcoming appointments.</p>
+                         </div>
+                    </div>
+               </div>
+          </div>
+     </section>
+
+     <!-- DASHBOARD CONTENT -->
+     <section id="dashboard">
+          <div class="container">
+               <div class="row">
+
+                    <!-- SIDEBAR -->
+                    <div class="col-md-3 col-sm-12">
+                         <div class="sidebar">
+                              <ul>
+                                   <li><a href="dashboard.html" class="active"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+                                   <li><a href="book-appointment.html"><i class="fa fa-calendar-plus-o"></i> Book Appointment</a></li>
+                                   <li><a href="my-appointments.html"><i class="fa fa-calendar"></i> My Appointments</a></li>
+                                   <li><a href="payments.html"><i class="fa fa-credit-card"></i> Payments</a></li>
+                                   <li><a href="prescriptions.html"><i class="fa fa-file-text"></i> Prescriptions</a></li>
+                                   <li><a href="medical-history.html"><i class="fa fa-history"></i> Medical History</a></li>
+                                   <li><a href="profile.html"><i class="fa fa-user"></i> Profile</a></li>
+                                   <li><a href="notifications.html"><i class="fa fa-bell"></i> Notifications</a></li>
+                              </ul>
+                         </div>
+                    </div>
+
+                    <!-- MAIN CONTENT -->
+                    <div class="col-md-9 col-sm-12">
+
+                         <!-- STATS CARDS -->
+                         <div class="row">
+                              <div class="col-md-3 col-sm-6">
+                                   <div class="stats-card text-center">
+                                        <div class="stats-icon text-primary">
+                                             <i class="fa fa-calendar"></i>
+                                        </div>
+                                        <div class="stats-number">12</div>
+                                        <div class="stats-title">Total Appointments</div>
+                                   </div>
+                              </div>
+                              <div class="col-md-3 col-sm-6">
+                                   <div class="stats-card text-center">
+                                        <div class="stats-icon text-warning">
+                                             <i class="fa fa-clock-o"></i>
+                                        </div>
+                                        <div class="stats-number">2</div>
+                                        <div class="stats-title">Upcoming</div>
+                                   </div>
+                              </div>
+                              <div class="col-md-3 col-sm-6">
+                                   <div class="stats-card text-center">
+                                        <div class="stats-icon text-success">
+                                             <i class="fa fa-check-circle"></i>
+                                        </div>
+                                        <div class="stats-number">8</div>
+                                        <div class="stats-title">Completed</div>
+                                   </div>
+                              </div>
+                              <div class="col-md-3 col-sm-6">
+                                   <div class="stats-card text-center">
+                                        <div class="stats-icon text-danger">
+                                             <i class="fa fa-money"></i>
+                                        </div>
+                                        <div class="stats-number">৳ 500</div>
+                                        <div class="stats-title">Pending Payments</div>
+                                   </div>
+                              </div>
+                         </div>
+
+                         <!-- QUICK ACTIONS -->
+                         <div class="quick-actions">
+                              <h3>Quick Actions</h3>
+                              <a href="book-appointment.html" class="btn btn-primary action-btn">
+                                   <i class="fa fa-calendar-plus-o"></i> Book Appointment
+                              </a>
+                              <a href="my-appointments.html" class="btn btn-success action-btn">
+                                   <i class="fa fa-calendar"></i> View Appointments
+                              </a>
+                              <a href="payments.html" class="btn btn-warning action-btn">
+                                   <i class="fa fa-credit-card"></i> Make Payment
+                              </a>
+                              <a href="prescriptions.html" class="btn btn-info action-btn">
+                                   <i class="fa fa-file-text"></i> View Prescriptions
+                              </a>
+                         </div>
+
+                         <!-- RECENT ACTIVITY -->
+                         <div class="recent-activity">
+                              <h3>Recent Activity</h3>
+                              <div class="activity-item">
+                                   <div class="activity-icon bg-primary">
+                                        <i class="fa fa-calendar-check-o text-white"></i>
+                                   </div>
+                                   <div class="activity-content">
+                                        <h5>Appointment Confirmed</h5>
+                                        <p>Dr. Ashraful Islam - Cardiology - Tomorrow at 2:00 PM</p>
+                                   </div>
+                              </div>
+                              <div class="activity-item">
+                                   <div class="activity-icon bg-success">
+                                        <i class="fa fa-check-circle text-white"></i>
+                                   </div>
+                                   <div class="activity-content">
+                                        <h5>Payment Successful</h5>
+                                        <p>Consultation fee - ৳ 500 - Paid on March 15, 2024</p>
+                                   </div>
+                              </div>
+                              <div class="activity-item">
+                                   <div class="activity-icon bg-info">
+                                        <i class="fa fa-file-text text-white"></i>
+                                   </div>
+                                   <div class="activity-content">
+                                        <h5>New Prescription</h5>
+                                        <p>Dr. Tanvir Rahman - General Medicine - March 10, 2024</p>
+                                   </div>
+                              </div>
+                         </div>
+
+                    </div>
+
+               </div>
+          </div>
+     </section>
+
+     <!-- SCRIPTS -->
+     <script src="js/jquery.js"></script>
+     <script src="js/bootstrap.min.js"></script>
+     <script src="js/jquery.sticky.js"></script>
+     <script src="js/wow.min.js"></script>
+     <script src="js/custom.js"></script>
+
+</body>
+</html>

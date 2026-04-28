@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Panel - Prescriptions</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <div class="wrapper">
+        <!-- Sidebar Navigation -->
+        <nav id="sidebar">
+            <div class="sidebar-header">
+                <i class="bi bi-heart-pulse-fill logo-icon"></i>
+                <h4>MediCare</h4>
+            </div>
+            <ul class="list-unstyled components">
+                <li><a href="index.html" class="nav-link-btn"><i class="bi bi-grid"></i> Dashboard</a></li>
+                <li><a href="appointments.html" class="nav-link-btn"><i class="bi bi-calendar-event"></i> Appointments</a></li>
+                <li><a href="patients.html" class="nav-link-btn"><i class="bi bi-people"></i> Patients</a></li>
+                <li class="active"><a href="prescriptions.html" class="nav-link-btn"><i class="bi bi-file-medical"></i> Prescriptions</a></li>
+                <li><a href="schedule.html" class="nav-link-btn"><i class="bi bi-clock-history"></i> Schedule</a></li>
+                <li><a href="profile.html" class="nav-link-btn"><i class="bi bi-person-badge"></i> Profile Setup</a></li>
+            </ul>
+        </nav>
+
+        <div id="content">
+            <!-- FULL STANDARD TOP NAVBAR -->
+            <nav class="top-navbar">
+                <button type="button" id="sidebarCollapse" class="btn text-primary fs-4 d-lg-none">
+                    <i class="bi bi-list"></i>
+                </button>
+                <div class="nav-search d-none d-md-block">
+                    <i class="bi bi-search"></i>
+                    <input type="text" class="form-control" placeholder="Search patients, appointments...">
+                </div>
+                <div class="nav-actions">
+                    <div class="dropdown">
+                        <button class="nav-icon-btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-bell"></i>
+                            <span class="notification-badge"></span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end shadow border-0" style="width: 300px;">
+                            <li><h6 class="dropdown-header fw-bold border-bottom pb-2">Notifications</h6></li>
+                            <li><a class="dropdown-item py-2" href="#">
+                                <div class="d-flex align-items-center">
+                                    <div class="bg-primary-light text-primary rounded-circle p-2 me-3"><i class="bi bi-calendar-plus"></i></div>
+                                    <div><p class="mb-0 fw-semibold text-wrap text-truncate" style="max-width: 200px;">New appointment booked</p><small class="text-muted">Just now</small></div>
+                                </div>
+                            </a></li>
+                        </ul>
+                    </div>
+                    <div class="dropdown profile-dropdown">
+                        <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="https://ui-avatars.com/api/?name=Dr+Smith&background=0b5ed7&color=fff" alt="Profile">
+                            <span class="d-none d-md-inline ms-2">Dr. Smith</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-2">
+                            <li><a class="dropdown-item" href="profile.html"><i class="bi bi-person me-2"></i> My Profile</a></li>
+                            <li><a class="dropdown-item" href="schedule.html"><i class="bi bi-calendar-check me-2"></i> Availability</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item text-danger" href="login.html"><i class="bi bi-box-arrow-right me-2"></i> Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="main-content-section active" style="display:block;">
+                <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
+                    <h3 class="fw-bold mb-0">Prescription Records</h3>
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#prescriptionModal"><i class="bi bi-plus-lg"></i> Write New</button>
+                </div>
+                
+                <div class="custom-table-card">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Patient</th>
+                                    <th>Date</th>
+                                    <th>Diagnosis</th>
+                                </tr>
+                            </thead>
+                                <tr>
+                                    <td class="fw-semibold">#PR-8821</td>
+                                    <td>Sarah Jenkins</td>
+                                    <td>Oct 15, 2023</td>
+                                    <td>Viral Fever</td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-semibold">#PR-8822</td>
+                                    <td>Michael Browny</td>
+                                    <td>Oct 15, 2023</td>
+                                    <td>Hypertension</td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-semibold">#PR-8823</td>
+                                    <td>Emma Watson</td>
+                                    <td>Oct 16, 2023</td>
+                                    <td>Migraine Relief</td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-semibold">#PR-8824</td>
+                                    <td>James Smith</td>
+                                    <td>Oct 16, 2023</td>
+                                    <td>Dental Antibiotics</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Write Prescription Modal -->
+    <div class="modal fade" id="prescriptionModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg" style="border-radius: 15px;">
+                <div class="modal-header border-bottom-0 pb-0">
+                    <h5 class="modal-title fw-bold">Write New Prescription</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <form>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Patient Name</label>
+                                <select class="form-select">
+                                    <option>Select Patient</option>
+                                    <option>Sarah Jenkins</option>
+                                    <option>John Doe</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Date</label>
+                                <input type="date" class="form-control" value="2023-10-15">
+                            </div>
+                            <div class="col-12 mt-4">
+                                <button type="button" class="btn btn-sm btn-light border text-primary w-100"><i class="bi bi-plus-lg"></i> Add Medicine</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer border-top-0 pt-0">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="alert('Prescription Saved!')">Save Prescription</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/script.js"></script>
+</body>
+</html>

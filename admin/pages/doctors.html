@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Management - Health Center Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <div class="sidebar">
+        <div class="sidebar-logo">
+            <h5><i class="fas fa-hospital"></i> Health Center</h5>
+            <p>Admin Panel v1.0</p>
+        </div>
+        <ul class="nav-menu">
+            <li class="nav-item">
+                <a href="index.html" class="nav-link">
+                    <i class="bi bi-graph-up"></i> Dashboard
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="doctors.html" class="nav-link active">
+                    <i class="bi bi-person-check"></i> Doctors
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="patients.html" class="nav-link">
+                    <i class="bi bi-people"></i> Patients
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="appointments.html" class="nav-link">
+                    <i class="bi bi-calendar-event"></i> Appointments
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="payments.html" class="nav-link">
+                    <i class="bi bi-credit-card"></i> Payments
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="reports.html" class="nav-link">
+                    <i class="bi bi-bar-chart"></i> Reports
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="settings.html" class="nav-link">
+                    <i class="bi bi-gear"></i> Settings
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Top Navigation Bar -->
+    <div class="topbar">
+        <div class="topbar-left">
+            <button class="toggle-sidebar-btn" title="Toggle Sidebar">
+                <i class="bi bi-list"></i>
+            </button>
+            <h6 class="m-0">Doctor Management</h6>
+        </div>
+        <div class="topbar-right">
+            <div class="search-box">
+                <i class="bi bi-search"></i>
+                <input type="text" id="doctorSearch" placeholder="Search doctors...">
+            </div>
+            <div class="notification-bell" data-bs-toggle="dropdown">
+                <i class="bi bi-bell"></i>
+                <span class="notification-badge">3</span>
+            </div>
+            <div class="dropdown-menu dropdown-menu-end">
+                <h6 class="dropdown-header">Notifications</h6>
+                <a class="dropdown-item" href="#">New doctor registration</a>
+            </div>
+            <div class="admin-profile" data-bs-toggle="dropdown">
+                <div class="admin-avatar">AD</div>
+                <span>Admin</span>
+            </div>
+            <div class="dropdown-menu dropdown-menu-end">
+                <a class="dropdown-item" href="profile.html">My Profile</a>
+                <a class="dropdown-item" href="#" onclick="logout()">Logout</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="dashboard-header d-flex justify-content-between align-items-center">
+            <div>
+                <h2>Doctors Management</h2>
+                <p class="welcome-message">Manage and organize all healthcare professionals.</p>
+            </div>
+            <button class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#addDoctorModal">
+                <i class="bi bi-plus-circle"></i> Add New Doctor
+            </button>
+        </div>
+
+        <!-- Search & Filter -->
+        <div class="search-filter-section">
+            <input type="text" class="form-control" id="doctorSearch" placeholder="Search by name, email, or specialization...">
+            <select class="form-control" id="specializationFilter">
+                <option value="">All Specializations</option>
+                <option value="Cardiology">Cardiology</option>
+                <option value="Neurology">Neurology</option>
+                <option value="Dermatology">Dermatology</option>
+                <option value="Orthopedics">Orthopedics</option>
+                <option value="General Practice">General Practice</option>
+            </select>
+            <select class="form-control" id="statusFilter">
+                <option value="">All Status</option>
+                <option value="Active">Active</option>
+                <option value="Inactive">Inactive</option>
+            </select>
+            <button class="btn btn-secondary" onclick="resetFilters()">
+                <i class="bi bi-arrow-clockwise"></i> Reset
+            </button>
+        </div>
+
+        <!-- Doctors Table -->
+        <div class="card">
+            <div class="card-header">
+                <h5>Doctors List</h5>
+                <small class="text-muted">Total Doctors: 24</small>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0" id="doctorsTable">
+                        <thead>
+                            <tr>
+                                <th>Doctor Name</th>
+                                <th>Specialization</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Qualification</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="avatar-sm me-3" style="width: 40px; height: 40px; background: #667eea; border-radius: 50%; color: white; display: flex; align-items: center; justify-content: center; font-weight: bold;">SA</div>
+                                        Dr. Sadiya Akter
+                                    </div>
+                                </td>
+                                <td>Cardiology</td>
+                                <td>sadiya.akter@healthcenter.com.bd</td>
+                                <td>+880 1712-345678</td>
+                                <td>MBBS, FCPS (Cardiology)</td>
+                                <td><span class="badge bg-success"><i class="bi bi-check-circle"></i> Active</span></td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#editDoctorModal" onclick="editDoctor(1, 'Dr. Sadiya Akter', 'Cardiology')">
+                                            <i class="bi bi-pencil"></i> Edit
+                                        </button>
+                                        <button class="btn btn-sm btn-danger" onclick="if(confirmDelete('Dr. Sadiya Akter')) { showToast('Doctor deleted successfully'); location.reload(); }">
+                                            <i class="bi bi-trash"></i> Delete
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="avatar-sm me-3" style="width: 40px; height: 40px; background: #764ba2; border-radius: 50%; color: white; display: flex; align-items: center; justify-content: center; font-weight: bold;">AI</div>
+                                        Dr. Ashraful Islam
+                                    </div>
+                                </td>
+                                <td>Neurology</td>
+                                <td>ashraful.islam@healthcenter.com.bd</td>
+                                <td>+880 1812-987654</td>
+                                <td>MBBS, Ph.D (Neurology)</td>
+                                <td><span class="badge bg-success"><i class="bi bi-check-circle"></i> Active</span></td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#editDoctorModal" onclick="editDoctor(2, 'Dr. Ashraful Islam', 'Neurology')">
+                                            <i class="bi bi-pencil"></i> Edit
+                                        </button>
+                                        <button class="btn btn-sm btn-danger" onclick="if(confirmDelete('Dr. Ashraful Islam')) { showToast('Doctor deleted successfully'); location.reload(); }">
+                                            <i class="bi bi-trash"></i> Delete
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="avatar-sm me-3" style="width: 40px; height: 40px; background: #28a745; border-radius: 50%; color: white; display: flex; align-items: center; justify-content: center; font-weight: bold;">NS</div>
+                                        Dr. Nasrin Sultana
+                                    </div>
+                                </td>
+                                <td>Dermatology</td>
+                                <td>nasrin.sultana@healthcenter.com.bd</td>
+                                <td>+880 1613-456789</td>
+                                <td>MBBS, DDV</td>
+                                <td><span class="badge bg-success"><i class="bi bi-check-circle"></i> Active</span></td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#editDoctorModal" onclick="editDoctor(3, 'Dr. Nasrin Sultana', 'Dermatology')">
+                                            <i class="bi bi-pencil"></i> Edit
+                                        </button>
+                                        <button class="btn btn-sm btn-danger" onclick="if(confirmDelete('Dr. Nasrin Sultana')) { showToast('Doctor deleted successfully'); location.reload(); }">
+                                            <i class="bi bi-trash"></i> Delete
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="avatar-sm me-3" style="width: 40px; height: 40px; background: #dc3545; border-radius: 50%; color: white; display: flex; align-items: center; justify-content: center; font-weight: bold;">AR</div>
+                                        Dr. Arifur Rahman
+                                    </div>
+                                </td>
+                                <td>Orthopedics</td>
+                                <td>arifur.rahman@healthcenter.com.bd</td>
+                                <td>+880 1511-789012</td>
+                                <td>MD, FAAOS</td>
+                                <td><span class="badge bg-secondary"><i class="bi bi-x-circle"></i> Inactive</span></td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#editDoctorModal" onclick="editDoctor(4, 'Dr. Arifur Rahman', 'Orthopedics')">
+                                            <i class="bi bi-pencil"></i> Edit
+                                        </button>
+                                        <button class="btn btn-sm btn-danger" onclick="if(confirmDelete('Dr. Arifur Rahman')) { showToast('Doctor deleted successfully'); location.reload(); }">
+                                            <i class="bi bi-trash"></i> Delete
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pagination -->
+        <nav class="mt-4">
+            <ul class="pagination justify-content-center">
+                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" href="#">Next</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Add Doctor Modal -->
+    <div class="modal fade" id="addDoctorModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add New Doctor</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addDoctorForm">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">First Name*</label>
+                                <input type="text" class="form-control" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Last Name*</label>
+                                <input type="text" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Email Address*</label>
+                            <input type="email" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Phone Number*</label>
+                            <input type="tel" class="form-control" required>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Specialization*</label>
+                                <select class="form-control" required>
+                                    <option value="">Select Specialization</option>
+                                    <option value="Cardiology">Cardiology</option>
+                                    <option value="Neurology">Neurology</option>
+                                    <option value="Dermatology">Dermatology</option>
+                                    <option value="Orthopedics">Orthopedics</option>
+                                    <option value="General Practice">General Practice</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Qualification*</label>
+                                <input type="text" class="form-control" placeholder="e.g., MBBS, FCPS (Cardiology)" required>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">License Number*</label>
+                            <input type="text" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Years of Experience*</label>
+                            <input type="number" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Status*</label>
+                            <select class="form-control" required>
+                                <option value="Active">Active</option>
+                                <option value="Inactive">Inactive</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="submitAddDoctor()">
+                        <i class="bi bi-save"></i> Add Doctor
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Doctor Modal -->
+    <div class="modal fade" id="editDoctorModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Doctor Information</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editDoctorForm">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">First Name*</label>
+                                <input type="text" class="form-control" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Last Name*</label>
+                                <input type="text" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Email Address*</label>
+                            <input type="email" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Phone Number*</label>
+                            <input type="tel" class="form-control" required>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Specialization*</label>
+                                <select class="form-control" required>
+                                    <option value="Cardiology">Cardiology</option>
+                                    <option value="Neurology">Neurology</option>
+                                    <option value="Dermatology">Dermatology</option>
+                                    <option value="Orthopedics">Orthopedics</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Status*</label>
+                                <select class="form-control" required>
+                                    <option value="Active">Active</option>
+                                    <option value="Inactive">Inactive</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="submitEditDoctor()">
+                        <i class="bi bi-save"></i> Save Changes
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/script.js"></script>
+    <script>
+        function editDoctor(id, name, specialization) {
+            // Populate form with doctor data
+            console.log('Editing doctor:', id, name, specialization);
+        }
+
+        function submitAddDoctor() {
+            showToast('Doctor added successfully!', 'success');
+            document.getElementById('addDoctorForm').reset();
+            bootstrap.Modal.getInstance(document.getElementById('addDoctorModal')).hide();
+            setTimeout(() => location.reload(), 1500);
+        }
+
+        function submitEditDoctor() {
+            showToast('Doctor updated successfully!', 'success');
+            bootstrap.Modal.getInstance(document.getElementById('editDoctorModal')).hide();
+            setTimeout(() => location.reload(), 1500);
+        }
+
+        function resetFilters() {
+            document.getElementById('doctorSearch').value = '';
+            document.getElementById('specializationFilter').value = '';
+            document.getElementById('statusFilter').value = '';
+            filterTable('doctorSearch', 'doctorsTable');
+        }
+
+        // Initialize search filter
+        filterTable('doctorSearch', 'doctorsTable');
+    </script>
+</body>
+</html>

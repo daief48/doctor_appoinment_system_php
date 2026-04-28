@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointment Management - Health Center Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <div class="sidebar">
+        <div class="sidebar-logo">
+            <h5><i class="fas fa-hospital"></i> Health Center</h5>
+            <p>Admin Panel v1.0</p>
+        </div>
+        <ul class="nav-menu">
+            <li class="nav-item"><a href="index.html" class="nav-link"><i class="bi bi-graph-up"></i> Dashboard</a></li>
+            <li class="nav-item"><a href="doctors.html" class="nav-link"><i class="bi bi-person-check"></i> Doctors</a></li>
+            <li class="nav-item"><a href="patients.html" class="nav-link"><i class="bi bi-people"></i> Patients</a></li>
+            <li class="nav-item"><a href="appointments.html" class="nav-link active"><i class="bi bi-calendar-event"></i> Appointments</a></li>
+            <li class="nav-item"><a href="payments.html" class="nav-link"><i class="bi bi-credit-card"></i> Payments</a></li>
+            <li class="nav-item"><a href="reports.html" class="nav-link"><i class="bi bi-bar-chart"></i> Reports</a></li>
+            <li class="nav-item"><a href="settings.html" class="nav-link"><i class="bi bi-gear"></i> Settings</a></li>
+        </ul>
+    </div>
+
+    <!-- Top Navigation Bar -->
+    <div class="topbar">
+        <div class="topbar-left">
+            <button class="toggle-sidebar-btn"><i class="bi bi-list"></i></button>
+            <h6 class="m-0">Appointment Management</h6>
+        </div>
+        <div class="topbar-right">
+            <div class="search-box">
+                <i class="bi bi-search"></i>
+                <input type="text" id="appointmentSearch" placeholder="Search appointments...">
+            </div>
+            <div class="notification-bell" data-bs-toggle="dropdown">
+                <i class="bi bi-bell"></i>
+                <span class="notification-badge">3</span>
+            </div>
+            <div class="admin-profile" data-bs-toggle="dropdown">
+                <div class="admin-avatar">AD</div>
+                <span>Admin</span>
+            </div>
+            <div class="dropdown-menu dropdown-menu-end">
+                <a class="dropdown-item" href="profile.html">My Profile</a>
+                <a class="dropdown-item" href="#" onclick="logout()">Logout</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="dashboard-header d-flex justify-content-between align-items-center">
+            <div>
+                <h2>Appointment Management</h2>
+                <p class="welcome-message">View, approve, and manage patient appointments.</p>
+            </div>
+        </div>
+
+        <!-- Search & Filter -->
+        <div class="search-filter-section">
+            <input type="text" class="form-control" id="appointmentSearch" placeholder="Search by patient or doctor...">
+            <select class="form-control" id="statusFilter">
+                <option value="">All Status</option>
+                <option value="Approved">Approved</option>
+                <option value="Pending">Pending</option>
+                <option value="Cancelled">Cancelled</option>
+            </select>
+            <input type="date" class="form-control" id="dateFilter">
+            <button class="btn btn-secondary"><i class="bi bi-arrow-clockwise"></i> Reset</button>
+        </div>
+
+        <!-- Statistics -->
+        <div class="stats-grid">
+            <div class="stat-card appointments">
+                <div class="stat-label">Total Appointments</div>
+                <div class="stat-value">384</div>
+                <small class="text-muted">+45 this week</small>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Pending Approval</div>
+                <div class="stat-value">12</div>
+                <small class="text-muted">Awaiting approval</small>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Today's Schedule</div>
+                <div class="stat-value">18</div>
+                <small class="text-muted">Appointments today</small>
+            </div>
+        </div>
+
+        <!-- Appointments Table -->
+        <div class="card">
+            <div class="card-header">
+                <h5>Appointments List</h5>
+                <button class="btn btn-sm btn-primary" onclick="exportTableToCSV('appointmentsTable', 'appointments.csv')">
+                    <i class="bi bi-download"></i> Export CSV
+                </button>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0" id="appointmentsTable">
+                        <thead>
+                            <tr>
+                                <th>Patient Name</th>
+                                <th>Doctor Name</th>
+                                <th>Date & Time</th>
+                                <th>Type</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Rohim Uddin</strong></td>
+                                <td>Dr. Sadiya Akter</td>
+                                <td>Today, 2:00 PM</td>
+                                <td>Consultation</td>
+                                <td><span class="badge badge-approved"><i class="bi bi-check-circle"></i> Approved</span></td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#appointmentDetailsModal">
+                                            <i class="bi bi-eye"></i> View
+                                        </button>
+                                        <button class="btn btn-sm btn-danger" onclick="if(confirmDelete('appointment')) showToast('Appointment cancelled!')">
+                                            <i class="bi bi-x"></i> Cancel
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Fatima Begum</strong></td>
+                                <td>Dr. Ashraful Islam</td>
+                                <td>Today, 3:30 PM</td>
+                                <td>Check-up</td>
+                                <td><span class="badge badge-pending"><i class="bi bi-clock"></i> Pending</span></td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn btn-sm btn-success" onclick="approveAppointment()">
+                                            <i class="bi bi-check"></i> Approve
+                                        </button>
+                                        <button class="btn btn-sm btn-danger" onclick="rejectAppointment()">
+                                            <i class="bi bi-x"></i> Reject
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Karim Ahmed</strong></td>
+                                <td>Dr. Nasrin Sultana</td>
+                                <td>Today, 4:15 PM</td>
+                                <td>Surgery Follow-up</td>
+                                <td><span class="badge badge-approved"><i class="bi bi-check-circle"></i> Approved</span></td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#appointmentDetailsModal">
+                                            <i class="bi bi-eye"></i> View
+                                        </button>
+                                        <button class="btn btn-sm btn-danger" onclick="if(confirmDelete('appointment')) showToast('Appointment cancelled!')">
+                                            <i class="bi bi-x"></i> Cancel
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Sadiya Akter</strong></td>
+                                <td>Dr. Arifur Rahman</td>
+                                <td>Tomorrow, 10:00 AM</td>
+                                <td>Physical Therapy</td>
+                                <td><span class="badge badge-cancelled"><i class="bi bi-x-circle"></i> Cancelled</span></td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#appointmentDetailsModal">
+                                            <i class="bi bi-eye"></i> View
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Arif Rahman</strong></td>
+                                <td>Dr. Sadiya Akter</td>
+                                <td>Tomorrow, 2:00 PM</td>
+                                <td>Consultation</td>
+                                <td><span class="badge badge-pending"><i class="bi bi-clock"></i> Pending</span></td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn btn-sm btn-success" onclick="approveAppointment()">
+                                            <i class="bi bi-check"></i> Approve
+                                        </button>
+                                        <button class="btn btn-sm btn-danger" onclick="rejectAppointment()">
+                                            <i class="bi bi-x"></i> Reject
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pagination -->
+        <nav class="mt-4">
+            <ul class="pagination justify-content-center">
+                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" href="#">Next</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Appointment Details Modal -->
+    <div class="modal fade" id="appointmentDetailsModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Appointment Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <h6 class="text-muted">Patient Information</h6>
+                            <p><strong>Name:</strong> Rohim Uddin</p>
+                            <p><strong>Email:</strong> rohim.uddin@email.com</p>
+                            <p><strong>Phone:</strong> +880 1712-345678</p>
+                        </div>
+                        <div class="col-md-6">
+                            <h6 class="text-muted">Doctor Information</h6>
+                            <p><strong>Name:</strong> Dr. Sadiya Akter</p>
+                            <p><strong>Specialization:</strong> Cardiology</p>
+                            <p><strong>Email:</strong> sadiya.akter@healthcenter.com.bd</p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6 class="text-muted">Appointment Details</h6>
+                            <p><strong>Date:</strong> Today</p>
+                            <p><strong>Time:</strong> 2:00 PM</p>
+                            <p><strong>Type:</strong> Consultation</p>
+                        </div>
+                        <div class="col-md-6">
+                            <h6 class="text-muted">Status Information</h6>
+                            <p><strong>Status:</strong> <span class="badge badge-approved">Approved</span></p>
+                            <p><strong>Created:</strong> 3 days ago</p>
+                            <p><strong>Notes:</strong> Patient has history of hypertension</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Edit Appointment</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/script.js"></script>
+    <script>
+        function approveAppointment() {
+            showToast('Appointment approved successfully!', 'success');
+            setTimeout(() => location.reload(), 1500);
+        }
+
+        function rejectAppointment() {
+            showToast('Appointment rejected!', 'warning');
+            setTimeout(() => location.reload(), 1500);
+        }
+
+        filterTable('appointmentSearch', 'appointmentsTable');
+    </script>
+</body>
+</html>

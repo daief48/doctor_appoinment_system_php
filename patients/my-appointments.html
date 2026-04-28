@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <title>Health Center - My Appointments</title>
+     <meta charset="UTF-8">
+     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+     <meta name="description" content="">
+     <meta name="keywords" content="">
+     <meta name="author" content="Tooplate">
+     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+     <link rel="stylesheet" href="css/bootstrap.min.css">
+     <link rel="stylesheet" href="css/font-awesome.min.css">
+     <link rel="stylesheet" href="css/animate.css">
+     <link rel="stylesheet" href="css/tooplate-style.css">
+
+     <style>
+         .appointments-container {
+             background: white;
+             border-radius: 10px;
+             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+             padding: 30px;
+             margin-bottom: 30px;
+         }
+         .appointments-header {
+             display: flex;
+             justify-content: space-between;
+             align-items: center;
+             margin-bottom: 30px;
+         }
+         .appointments-header h2 {
+             margin: 0;
+             color: #333;
+         }
+         .filter-section {
+             background: #f8f9fa;
+             padding: 20px;
+             border-radius: 5px;
+             margin-bottom: 20px;
+         }
+         .appointment-card {
+             border: 1px solid #ddd;
+             border-radius: 8px;
+             padding: 20px;
+             margin-bottom: 15px;
+             transition: all 0.3s ease;
+         }
+         .appointment-card:hover {
+             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+         }
+         .appointment-header {
+             display: flex;
+             justify-content: space-between;
+             align-items: flex-start;
+             margin-bottom: 15px;
+         }
+         .doctor-info h4 {
+             margin: 0 0 5px 0;
+             color: #333;
+         }
+         .doctor-info p {
+             margin: 0;
+             color: #666;
+         }
+         .status-badge {
+             padding: 5px 12px;
+             border-radius: 20px;
+             font-size: 0.8em;
+             font-weight: bold;
+             text-transform: uppercase;
+         }
+         .status-approved {
+             background: #d4edda;
+             color: #155724;
+         }
+         .status-pending {
+             background: #fff3cd;
+             color: #856404;
+         }
+         .status-cancelled {
+             background: #f8d7da;
+             color: #721c24;
+         }
+         .status-completed {
+             background: #d1ecf1;
+             color: #0c5460;
+         }
+         .appointment-details {
+             display: grid;
+             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+             gap: 15px;
+             margin-bottom: 15px;
+         }
+         .detail-item {
+             display: flex;
+             align-items: center;
+         }
+         .detail-item i {
+             margin-right: 8px;
+             color: #667eea;
+             width: 16px;
+         }
+         .appointment-actions {
+             display: flex;
+             gap: 10px;
+             flex-wrap: wrap;
+         }
+         .btn-action {
+             padding: 8px 16px;
+             border-radius: 5px;
+             font-size: 0.9em;
+             font-weight: bold;
+             text-decoration: none;
+             transition: all 0.3s ease;
+         }
+         .btn-action:hover {
+             transform: translateY(-2px);
+         }
+         .empty-state {
+             text-align: center;
+             padding: 50px 20px;
+             color: #666;
+         }
+         .empty-state i {
+             font-size: 4em;
+             margin-bottom: 20px;
+             opacity: 0.5;
+         }
+         .pagination-container {
+             display: flex;
+             justify-content: center;
+             margin-top: 30px;
+         }
+         @media (max-width: 768px) {
+             .appointment-header {
+                 flex-direction: column;
+                 align-items: flex-start;
+             }
+             .appointment-actions {
+                 justify-content: center;
+             }
+             .appointments-header {
+                 flex-direction: column;
+                 align-items: flex-start;
+                 gap: 15px;
+             }
+         }
+     </style>
+</head>
+<body>
+
+     <!-- HEADER -->
+     <header>
+          <div class="container">
+               <div class="row">
+                    <div class="col-md-8 col-sm-7">
+                         <p>Welcome back, Rohim Uddin!</p>
+                    </div>
+                    <div class="col-md-4 col-sm-5 text-align-right">
+                         <span class="email-icon"><i class="fa fa-envelope-o"></i> <a href="#">rohim.uddin@email.com</a></span>
+                         <span class="logout-icon"><i class="fa fa-sign-out"></i> <a href="login.html">Logout</a></span>
+                    </div>
+               </div>
+          </div>
+     </header>
+
+     <!-- MENU -->
+     <section class="navbar navbar-default navbar-static-top" role="navigation">
+          <div class="container">
+
+               <div class="navbar-header">
+                    <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                         <span class="icon icon-bar"></span>
+                         <span class="icon icon-bar"></span>
+                         <span class="icon icon-bar"></span>
+                    </button>
+
+                    <!-- lOGO TEXT HERE -->
+                    <a href="index.html" class="navbar-brand"><i class="fa fa-h-square"></i>ealth Center</a>
+               </div>
+
+               <!-- MENU LINKS -->
+               <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                         <li><a href="#top" class="smoothScroll"><i class="fa fa-home"></i> Home</a></li>
+                         <li><a href="#about" class="smoothScroll"><i class="fa fa-info-circle"></i> About</a></li>
+                         <li><a href="#team" class="smoothScroll"><i class="fa fa-user-md"></i> Doctors</a></li>
+                         <li><a href="#google-map" class="smoothScroll"><i class="fa fa-map-marker"></i> Contact</a></li>
+                         <li class="appointment-btn">
+                              <a href="#appointment">
+                                   <i class="fa fa-calendar-plus-o"></i> Book Appointment
+                              </a>
+                         </li>
+                         <li class="dropdown">
+                              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                   <i class="fa fa-user-shield"></i> Portal <i class="fa fa-caret-down"></i>
+                              </a>
+                              <ul class="dropdown-menu">
+                                   <li><a href="login.html"><i class="fa fa-sign-in"></i> Login</a></li>
+                                   <li><a href="register.html"><i class="fa fa-user-plus"></i> Register</a></li>
+                                   <li class="divider"></li>
+                                   <li><a href="dashboard.html"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+                                   <li><a href="book-appointment.html"><i class="fa fa-calendar-plus-o"></i> Appointments</a></li>
+                                   <li><a href="payments.html"><i class="fa fa-credit-card"></i> Payments</a></li>
+                                   <li><a href="prescriptions.html"><i class="fa fa-file-text"></i> Prescriptions</a></li>
+                                   <li><a href="profile.html"><i class="fa fa-user"></i> Profile</a></li>
+                                   <li class="divider"></li>
+                                   <li><a href="medical-history.html"><i class="fa fa-history"></i> History</a></li>
+                                   <li><a href="notifications.html"><i class="fa fa-bell"></i> Notifications</a></li>
+                              </ul>
+                         </li>
+                    </ul>
+               </div>
+          </div>
+     </section>
+<!-- APPOINTMENTS SECTION -->
+     <section id="appointments" style="padding: 50px 0;">
+          <div class="container">
+               <div class="row">
+                    <div class="col-md-12">
+
+                         <div class="appointments-container">
+                              <div class="appointments-header">
+                                   <h2><i class="fa fa-calendar"></i> My Appointments</h2>
+                                   <a href="book-appointment.html" class="btn btn-primary">
+                                        <i class="fa fa-plus"></i> Book New Appointment
+                                   </a>
+                              </div>
+
+                              <!-- FILTERS -->
+                              <div class="filter-section">
+                                   <div class="row">
+                                        <div class="col-md-3 col-sm-6">
+                                             <div class="form-group">
+                                                  <label>Filter by Status:</label>
+                                                  <select class="form-control" id="status-filter">
+                                                       <option value="all">All Appointments</option>
+                                                       <option value="pending">Pending</option>
+                                                       <option value="approved">Approved</option>
+                                                       <option value="completed">Completed</option>
+                                                       <option value="cancelled">Cancelled</option>
+                                                  </select>
+                                             </div>
+                                        </div>
+                                        <div class="col-md-3 col-sm-6">
+                                             <div class="form-group">
+                                                  <label>Sort by:</label>
+                                                  <select class="form-control" id="sort-by">
+                                                       <option value="date-desc">Date (Newest First)</option>
+                                                       <option value="date-asc">Date (Oldest First)</option>
+                                                       <option value="doctor">Doctor Name</option>
+                                                  </select>
+                                             </div>
+                                        </div>
+                                        <div class="col-md-3 col-sm-6">
+                                             <div class="form-group">
+                                                  <label>Search Doctor:</label>
+                                                  <input type="text" class="form-control" id="doctor-search" placeholder="Search by doctor name...">
+                                             </div>
+                                        </div>
+                                        <div class="col-md-3 col-sm-6">
+                                             <div class="form-group">
+                                                  <label>Date Range:</label>
+                                                  <input type="date" class="form-control" id="date-filter">
+                                             </div>
+                                        </div>
+                                   </div>
+                              </div>
+
+                              <!-- APPOINTMENTS LIST -->
+                              <div id="appointments-list">
+                                   <!-- Appointments will be loaded here -->
+                              </div>
+
+                              <!-- PAGINATION -->
+                              <div class="pagination-container">
+                                   <nav aria-label="Appointments pagination">
+                                        <ul class="pagination" id="pagination">
+                                             <!-- Pagination will be generated here -->
+                                        </ul>
+                                   </nav>
+                              </div>
+                         </div>
+
+                    </div>
+               </div>
+          </div>
+     </section>
+
+     <!-- CANCEL CONFIRMATION MODAL -->
+     <div class="modal fade" id="cancelModal" tabindex="-1" role="dialog">
+          <div class="modal-dialog" role="document">
+               <div class="modal-content">
+                    <div class="modal-header">
+                         <h4 class="modal-title"><i class="fa fa-exclamation-triangle text-warning"></i> Cancel Appointment</h4>
+                    </div>
+                    <div class="modal-body">
+                         <p>Are you sure you want to cancel this appointment?</p>
+                         <div id="cancel-details"></div>
+                         <p class="text-muted">Note: Cancellations made less than 24 hours before the appointment may incur a fee.</p>
+                    </div>
+                    <div class="modal-footer">
+                         <button type="button" class="btn btn-default" data-dismiss="modal">Keep Appointment</button>
+                         <button type="button" class="btn btn-danger" id="confirm-cancel">Yes, Cancel</button>
+                    </div>
+               </div>
+          </div>
+     </div>
+
+     <!-- RESCHEDULE MODAL -->
+     <div class="modal fade" id="rescheduleModal" tabindex="-1" role="dialog">
+          <div class="modal-dialog" role="document">
+               <div class="modal-content">
+                    <div class="modal-header">
+                         <h4 class="modal-title"><i class="fa fa-calendar"></i> Reschedule Appointment</h4>
+                    </div>
+                    <div class="modal-body">
+                         <div id="reschedule-details"></div>
+                         <div class="form-group">
+                              <label for="new-date">New Date:</label>
+                              <input type="date" class="form-control" id="new-date" required>
+                         </div>
+                         <div class="form-group">
+                              <label for="new-time">New Time:</label>
+                              <select class="form-control" id="new-time" required>
+                                   <option value="">Select time</option>
+                                   <option value="09:00">9:00 AM</option>
+                                   <option value="09:30">9:30 AM</option>
+                                   <option value="10:00">10:00 AM</option>
+                                   <option value="10:30">10:30 AM</option>
+                                   <option value="11:00">11:00 AM</option>
+                                   <option value="14:00">2:00 PM</option>
+                                   <option value="14:30">2:30 PM</option>
+                                   <option value="15:00">3:00 PM</option>
+                                   <option value="15:30">3:30 PM</option>
+                                   <option value="16:00">4:00 PM</option>
+                              </select>
+                         </div>
+                    </div>
+                    <div class="modal-footer">
+                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                         <button type="button" class="btn btn-primary" id="confirm-reschedule">Reschedule</button>
+                    </div>
+               </div>
+          </div>
+     </div>
+
+     <!-- SCRIPTS -->
+     <script src="js/jquery.js"></script>
+     <script src="js/bootstrap.min.js"></script>
+     <script>
+         $(document).ready(function() {
+             let currentPage = 1;
+             const itemsPerPage = 5;
+             let appointments = [];
+             let filteredAppointments = [];
+
+             // Load appointments
+             loadAppointments();
+
+             // Filter and search functionality
+             $('#status-filter, #sort-by, #doctor-search, #date-filter').on('change input', function() {
+                 filterAppointments();
+                 currentPage = 1;
+                 renderAppointments();
+             });
+
+             function loadAppointments() {
+                 // Mock data - in real app, this would come from API
+                 appointments = [
+                     {
+                         id: 1,
+                         doctor: 'Dr. Ashraful Islam',
+                         specialty: 'General Medicine',
+                         date: '2024-04-15',
+                         time: '10:00',
+                         status: 'approved',
+                         type: 'Consultation',
+                         notes: 'Regular checkup'
+                     },
+                     {
+                         id: 2,
+                         doctor: 'Dr. Sadiya Akter',
+                         specialty: 'Cardiology',
+                         date: '2024-04-10',
+                         time: '14:30',
+                         status: 'completed',
+                         type: 'Follow-up',
+                         notes: 'Heart checkup'
+                     },
+                     {
+                         id: 3,
+                         doctor: 'Dr. Tanvir Rahman',
+                         specialty: 'General Medicine',
+                         date: '2024-04-20',
+                         time: '11:00',
+                         status: 'pending',
+                         type: 'Consultation',
+                         notes: 'Fever and cough'
+                     },
+                     {
+                         id: 4,
+                         doctor: 'Dr. Mehedi Hasan',
+                         specialty: 'Dentistry',
+                         date: '2024-03-28',
+                         time: '09:30',
+                         status: 'cancelled',
+                         type: 'Consultation',
+                         notes: 'Teeth cleaning'
+                     },
+                     {
+                         id: 5,
+                         doctor: 'Dr. Farhana Ahmed',
+                         specialty: 'Orthopedics',
+                         date: '2024-04-25',
+                         time: '15:00',
+                         status: 'approved',
+                         type: 'Consultation',
+                         notes: 'Knee pain'
+                     },
+                     {
+                         id: 6,
+                         doctor: 'Dr. Kamrul Hasan',
+                         specialty: 'Pediatrics',
+                         date: '2024-04-18',
+                         time: '13:00',
+                         status: 'approved',
+                         type: 'Consultation',
+                         notes: 'Child vaccination'
+                     }
+                 ];
+
+                 filterAppointments();
+                 renderAppointments();
+             }
+
+             function filterAppointments() {
+                 const statusFilter = $('#status-filter').val();
+                 const searchTerm = $('#doctor-search').val().toLowerCase();
+                 const dateFilter = $('#date-filter').val();
+                 const sortBy = $('#sort-by').val();
+
+                 filteredAppointments = appointments.filter(apt => {
+                     const matchesStatus = statusFilter === 'all' || apt.status === statusFilter;
+                     const matchesSearch = apt.doctor.toLowerCase().includes(searchTerm);
+                     const matchesDate = !dateFilter || apt.date === dateFilter;
+
+                     return matchesStatus && matchesSearch && matchesDate;
+                 });
+
+                 // Sort appointments
+                 filteredAppointments.sort((a, b) => {
+                     switch(sortBy) {
+                         case 'date-asc':
+                             return new Date(a.date) - new Date(b.date);
+                         case 'date-desc':
+                             return new Date(b.date) - new Date(a.date);
+                         case 'doctor':
+                             return a.doctor.localeCompare(b.doctor);
+                         default:
+                             return new Date(b.date) - new Date(a.date);
+                     }
+                 });
+             }
+
+             function renderAppointments() {
+                 const startIndex = (currentPage - 1) * itemsPerPage;
+                 const endIndex = startIndex + itemsPerPage;
+                 const pageAppointments = filteredAppointments.slice(startIndex, endIndex);
+
+                 let html = '';
+
+                 if (pageAppointments.length === 0) {
+                     html = `
+                         <div class="empty-state">
+                              <i class="fa fa-calendar-o"></i>
+                              <h3>No appointments found</h3>
+                              <p>You don't have any appointments matching your criteria.</p>
+                              <a href="book-appointment.html" class="btn btn-primary">Book Your First Appointment</a>
+                         </div>
+                     `;
+                 } else {
+                     pageAppointments.forEach(apt => {
+                         const statusClass = `status-${apt.status}`;
+                         const statusText = apt.status.charAt(0).toUpperCase() + apt.status.slice(1);
+                         const appointmentDate = new Date(apt.date + ' ' + apt.time);
+                         const isPast = appointmentDate < new Date();
+                         const canCancel = apt.status === 'pending' || apt.status === 'approved';
+                         const canReschedule = apt.status === 'pending' || apt.status === 'approved';
+
+                         html += `
+                             <div class="appointment-card">
+                                 <div class="appointment-header">
+                                     <div class="doctor-info">
+                                         <h4>${apt.doctor}</h4>
+                                         <p><i class="fa fa-stethoscope"></i> ${apt.specialty}</p>
+                                     </div>
+                                     <span class="status-badge ${statusClass}">${statusText}</span>
+                                 </div>
+
+                                 <div class="appointment-details">
+                                     <div class="detail-item">
+                                         <i class="fa fa-calendar"></i>
+                                         <span>${new Date(apt.date).toLocaleDateString()}</span>
+                                     </div>
+                                     <div class="detail-item">
+                                         <i class="fa fa-clock-o"></i>
+                                         <span>${apt.time}</span>
+                                     </div>
+                                     <div class="detail-item">
+                                         <i class="fa fa-tag"></i>
+                                         <span>${apt.type}</span>
+                                     </div>
+                                     <div class="detail-item">
+                                         <i class="fa fa-comment"></i>
+                                         <span>${apt.notes}</span>
+                                     </div>
+                                 </div>
+
+                                 <div class="appointment-actions">
+                                     <a href="#" class="btn btn-info btn-action" onclick="viewDetails(${apt.id})">
+                                         <i class="fa fa-eye"></i> View Details
+                                     </a>
+                                     ${canReschedule ? `<a href="#" class="btn btn-warning btn-action" onclick="rescheduleAppointment(${apt.id})">
+                                         <i class="fa fa-calendar"></i> Reschedule
+                                     </a>` : ''}
+                                     ${canCancel ? `<a href="#" class="btn btn-danger btn-action" onclick="cancelAppointment(${apt.id})">
+                                         <i class="fa fa-times"></i> Cancel
+                                     </a>` : ''}
+                                 </div>
+                             </div>
+                         `;
+                     });
+                 }
+
+                 $('#appointments-list').html(html);
+                 renderPagination();
+             }
+
+             function renderPagination() {
+                 const totalPages = Math.ceil(filteredAppointments.length / itemsPerPage);
+                 let paginationHtml = '';
+
+                 if (totalPages > 1) {
+                     // Previous button
+                     paginationHtml += `<li class="${currentPage === 1 ? 'disabled' : ''}">
+                         <a href="#" onclick="changePage(${currentPage - 1})">Previous</a>
+                     </li>`;
+
+                     // Page numbers
+                     for (let i = 1; i <= totalPages; i++) {
+                         paginationHtml += `<li class="${i === currentPage ? 'active' : ''}">
+                             <a href="#" onclick="changePage(${i})">${i}</a>
+                         </li>`;
+                     }
+
+                     // Next button
+                     paginationHtml += `<li class="${currentPage === totalPages ? 'disabled' : ''}">
+                         <a href="#" onclick="changePage(${currentPage + 1})">Next</a>
+                     </li>`;
+                 }
+
+                 $('#pagination').html(paginationHtml);
+             }
+
+             // Global functions for onclick handlers
+             window.changePage = function(page) {
+                 if (page >= 1 && page <= Math.ceil(filteredAppointments.length / itemsPerPage)) {
+                     currentPage = page;
+                     renderAppointments();
+                 }
+             };
+
+             window.viewDetails = function(id) {
+                 const apt = appointments.find(a => a.id === id);
+                 if (apt) {
+                     alert(`Appointment Details:\n\nDoctor: ${apt.doctor}\nSpecialty: ${apt.specialty}\nDate: ${apt.date}\nTime: ${apt.time}\nType: ${apt.type}\nNotes: ${apt.notes}\nStatus: ${apt.status}`);
+                 }
+             };
+
+             window.cancelAppointment = function(id) {
+                 const apt = appointments.find(a => a.id === id);
+                 if (apt) {
+                     const details = `<strong>Doctor:</strong> ${apt.doctor}<br><strong>Date:</strong> ${apt.date}<br><strong>Time:</strong> ${apt.time}`;
+                     $('#cancel-details').html(details);
+                     $('#cancelModal').modal('show');
+
+                     $('#confirm-cancel').off('click').on('click', function() {
+                         apt.status = 'cancelled';
+                         filterAppointments();
+                         renderAppointments();
+                         $('#cancelModal').modal('hide');
+                         alert('Appointment cancelled successfully.');
+                     });
+                 }
+             };
+
+             window.rescheduleAppointment = function(id) {
+                 const apt = appointments.find(a => a.id === id);
+                 if (apt) {
+                     const details = `<p><strong>Current Appointment:</strong><br>Doctor: ${apt.doctor}<br>Date: ${apt.date}<br>Time: ${apt.time}</p>`;
+                     $('#reschedule-details').html(details);
+                     $('#rescheduleModal').modal('show');
+
+                     $('#confirm-reschedule').off('click').on('click', function() {
+                         const newDate = $('#new-date').val();
+                         const newTime = $('#new-time').val();
+
+                         if (newDate && newTime) {
+                             apt.date = newDate;
+                             apt.time = newTime;
+                             apt.status = 'pending'; // Reset to pending after reschedule
+                             filterAppointments();
+                             renderAppointments();
+                             $('#rescheduleModal').modal('hide');
+                             alert('Appointment rescheduled successfully.');
+                         } else {
+                             alert('Please select both date and time.');
+                         }
+                     });
+                 }
+             };
+         });
+     </script>
+
+</body>
+</html>
